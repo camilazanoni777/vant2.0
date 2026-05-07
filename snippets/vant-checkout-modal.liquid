@@ -1,0 +1,1262 @@
+<style>
+  /* ── VANT CHECKOUT MODAL ──────────────────────────────── */
+
+  .vant-checkout-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(10, 17, 13, 0.96);
+    z-index: 9000;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+  }
+
+  .vant-checkout-overlay.is-active {
+    display: flex;
+  }
+
+  /* ── MODAL SHELL ─────────────────────────────────────── */
+
+  .vant-checkout-modal {
+    position: relative;
+    width: min(1120px, calc(100vw - 32px));
+    max-height: calc(100vh - 32px);
+    background: var(--vant-forest, #0f1f15);
+    border: 0.5px solid var(--vant-border, rgba(201, 168, 76, 0.2));
+    border-radius: 28px;
+    box-shadow: 0 40px 100px rgba(0, 0, 0, 0.75), 0 8px 24px rgba(0, 0, 0, 0.5);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* ── CONTENT WRAP (2-col grid) ───────────────────────── */
+
+  .vant-co-content {
+    display: grid;
+    grid-template-columns: 1.35fr 0.9fr;
+    flex: 1;
+    overflow-y: auto;
+  }
+
+  .vant-co-content::-webkit-scrollbar { width: 3px; }
+  .vant-co-content::-webkit-scrollbar-track { background: transparent; }
+  .vant-co-content::-webkit-scrollbar-thumb {
+    background: rgba(201, 168, 76, 0.18);
+    border-radius: 2px;
+  }
+
+  /* ── CLOSE BUTTON ────────────────────────────────────── */
+
+  .vant-co-close {
+    position: absolute;
+    top: 18px;
+    right: 18px;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: rgba(10, 17, 13, 0.6);
+    border: 0.5px solid var(--vant-border, rgba(201, 168, 76, 0.2));
+    color: var(--vant-gold, #c9a84c);
+    font-size: 1rem;
+    line-height: 1;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: border-color 0.25s, background 0.25s;
+    z-index: 20;
+    flex-shrink: 0;
+  }
+
+  .vant-co-close:hover {
+    border-color: var(--vant-gold, #c9a84c);
+    background: rgba(201, 168, 76, 0.08);
+  }
+
+  /* ── LEFT COLUMN ─────────────────────────────────────── */
+
+  .vant-co-form-col {
+    padding: 48px;
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+  }
+
+  .vant-co-main-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 400;
+    font-size: clamp(1.75rem, 2.4vw, 2.4rem);
+    color: var(--vant-cream, #f0e8d5);
+    margin: 0;
+    padding-right: 44px;
+  }
+
+  /* ── STEP LABEL ──────────────────────────────────────── */
+
+  .vant-co-step {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    font-family: 'Jost', sans-serif;
+    font-weight: 400;
+    font-size: 0.57rem;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--vant-gold, #c9a84c);
+    margin-bottom: 18px;
+  }
+
+  .vant-co-step::after {
+    content: '';
+    flex: 1;
+    height: 0.5px;
+    background: linear-gradient(to right, rgba(201, 168, 76, 0.3), transparent);
+  }
+
+  /* ── FORM FIELDS ─────────────────────────────────────── */
+
+  .vant-co-fields {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .vant-co-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+
+  .vant-co-field {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .vant-co-field label {
+    font-family: 'Jost', sans-serif;
+    font-size: 0.62rem;
+    font-weight: 400;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--vant-text-muted, #8fa88a);
+  }
+
+  .vant-co-input,
+  .vant-co-select {
+    background: rgba(10, 17, 13, 0.4);
+    border: 0.5px solid var(--vant-border, rgba(201, 168, 76, 0.2));
+    color: var(--vant-text, #e8dfc8);
+    padding: 13px 16px;
+    border-radius: 10px;
+    font-family: 'Jost', sans-serif;
+    font-size: 0.83rem;
+    font-weight: 300;
+    outline: none;
+    width: 100%;
+    box-sizing: border-box;
+    transition: border-color 0.25s, box-shadow 0.25s;
+    -webkit-appearance: none;
+    appearance: none;
+  }
+
+  .vant-co-input::placeholder {
+    color: rgba(143, 168, 138, 0.4);
+  }
+
+  .vant-co-input:focus,
+  .vant-co-select:focus {
+    border-color: rgba(201, 168, 76, 0.55);
+    box-shadow: 0 0 0 3px rgba(201, 168, 76, 0.06);
+  }
+
+  .vant-co-select {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='7' viewBox='0 0 12 7'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%238fa88a' stroke-width='1.4' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 14px center;
+    padding-right: 36px;
+    cursor: pointer;
+  }
+
+  .vant-co-select option { background: #0f1f15; color: #e8dfc8; }
+
+  /* ── CEP ROW ─────────────────────────────────────────── */
+
+  .vant-co-cep-row {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 10px;
+  }
+
+  .vant-co-btn-sm {
+    background: transparent;
+    border: 0.5px solid var(--vant-border, rgba(201, 168, 76, 0.2));
+    color: var(--vant-gold, #c9a84c);
+    padding: 0 18px;
+    border-radius: 10px;
+    font-family: 'Jost', sans-serif;
+    font-size: 0.65rem;
+    font-weight: 500;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: border-color 0.25s, background 0.25s;
+    height: 44px;
+    box-sizing: border-box;
+  }
+
+  .vant-co-btn-sm:hover {
+    border-color: var(--vant-gold, #c9a84c);
+    background: rgba(201, 168, 76, 0.06);
+  }
+
+  .vant-co-btn-sm:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+  }
+
+  /* ── PAYMENT SELECTORS ───────────────────────────────── */
+
+  .vant-co-pay-tabs {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+
+  .vant-co-pay-tab {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 14px 10px;
+    border: 0.5px solid var(--vant-border, rgba(201, 168, 76, 0.2));
+    background: rgba(10, 17, 13, 0.28);
+    color: var(--vant-text-muted, #8fa88a);
+    border-radius: 12px;
+    cursor: pointer;
+    font-family: 'Jost', sans-serif;
+    font-size: 0.72rem;
+    letter-spacing: 0.4px;
+    transition: border-color 0.25s, color 0.25s, background 0.25s;
+    user-select: none;
+  }
+
+  .vant-co-pay-tab .pi {
+    font-size: 1.25rem;
+    line-height: 1;
+  }
+
+  .vant-co-pay-tab:hover {
+    border-color: rgba(201, 168, 76, 0.4);
+    color: var(--vant-cream, #f0e8d5);
+  }
+
+  .vant-co-pay-tab.active {
+    border-color: var(--vant-gold, #c9a84c);
+    color: var(--vant-gold, #c9a84c);
+    background: rgba(201, 168, 76, 0.08);
+  }
+
+  /* ── PAYMENT PANELS ──────────────────────────────────── */
+
+  .vant-co-panel {
+    display: none;
+  }
+
+  .vant-co-panel.on {
+    display: block;
+  }
+
+  /* Pix box */
+  .vant-co-pix-box {
+    border: 0.5px solid var(--vant-border, rgba(201, 168, 76, 0.2));
+    border-radius: 12px;
+    background: rgba(10, 17, 13, 0.5);
+    padding: 22px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .vant-co-pix-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(201, 168, 76, 0.1);
+    border: 0.5px solid rgba(201, 168, 76, 0.35);
+    color: var(--vant-gold, #c9a84c);
+    font-family: 'Jost', sans-serif;
+    font-size: 0.58rem;
+    font-weight: 500;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 6px 12px;
+    border-radius: 20px;
+    width: fit-content;
+  }
+
+  .vant-co-pix-code {
+    font-family: 'Courier New', monospace;
+    font-size: 0.64rem;
+    color: var(--vant-text-muted, #8fa88a);
+    word-break: break-all;
+    line-height: 1.65;
+    background: rgba(10, 17, 13, 0.55);
+    border: 0.5px solid rgba(201, 168, 76, 0.1);
+    border-radius: 8px;
+    padding: 12px 14px;
+  }
+
+  .vant-co-pix-copy {
+    background: transparent;
+    border: 0.5px solid var(--vant-border, rgba(201, 168, 76, 0.2));
+    color: var(--vant-gold, #c9a84c);
+    padding: 10px 16px;
+    border-radius: 8px;
+    font-family: 'Jost', sans-serif;
+    font-size: 0.62rem;
+    font-weight: 500;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: border-color 0.25s, background 0.25s;
+    width: fit-content;
+  }
+
+  .vant-co-pix-copy:hover {
+    border-color: var(--vant-gold, #c9a84c);
+    background: rgba(201, 168, 76, 0.06);
+  }
+
+  .vant-co-pix-note {
+    font-family: 'Jost', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 300;
+    color: var(--vant-text-muted, #8fa88a);
+    line-height: 1.7;
+    margin: 0;
+  }
+
+  /* Boleto box */
+  .vant-co-boleto-box {
+    border: 0.5px solid var(--vant-border, rgba(201, 168, 76, 0.2));
+    border-radius: 12px;
+    background: rgba(10, 17, 13, 0.5);
+    padding: 22px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .vant-co-boleto-box p {
+    font-family: 'Jost', sans-serif;
+    font-size: 0.78rem;
+    font-weight: 300;
+    color: var(--vant-text-muted, #8fa88a);
+    line-height: 1.65;
+    margin: 0;
+  }
+
+  /* ── SUBMIT ──────────────────────────────────────────── */
+
+  .vant-co-submit {
+    width: 100%;
+    background: var(--vant-gold, #c9a84c);
+    color: var(--vant-deep, #0a110d);
+    border: none;
+    padding: 18px 22px;
+    border-radius: 12px;
+    font-family: 'Jost', sans-serif;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    cursor: pointer;
+    margin-top: 8px;
+    transition: background 0.3s;
+  }
+
+  .vant-co-submit:hover {
+    background: var(--vant-gold-light, #e8d08a);
+  }
+
+  .vant-co-security {
+    text-align: center;
+    font-family: 'Jost', sans-serif;
+    font-size: 0.63rem;
+    color: var(--vant-text-muted, #8fa88a);
+    opacity: 0.55;
+    letter-spacing: 0.3px;
+    margin-top: 6px;
+  }
+
+  /* ── RIGHT COLUMN ────────────────────────────────────── */
+
+  .vant-co-summary-col {
+    background: var(--vant-moss, #1a3322);
+    padding: 48px 32px;
+    border-left: 0.5px solid var(--vant-border, rgba(201, 168, 76, 0.2));
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  .vant-co-summary-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 400;
+    font-size: 1.45rem;
+    color: var(--vant-cream, #f0e8d5);
+    margin: 0;
+  }
+
+  /* Product row */
+  .vant-co-product {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+  }
+
+  .vant-co-product-thumb {
+    width: 64px;
+    height: 64px;
+    flex-shrink: 0;
+    border-radius: 10px;
+    background: rgba(10, 17, 13, 0.5);
+    border: 0.5px solid var(--vant-border, rgba(201, 168, 76, 0.2));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .vant-co-product-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    min-width: 0;
+  }
+
+  .vant-co-product-name {
+    font-family: 'Jost', sans-serif;
+    font-weight: 400;
+    font-size: 0.86rem;
+    color: var(--vant-cream, #f0e8d5);
+    line-height: 1.4;
+  }
+
+  .vant-co-product-variant {
+    font-family: 'Jost', sans-serif;
+    font-size: 0.7rem;
+    font-weight: 300;
+    color: var(--vant-text-muted, #8fa88a);
+  }
+
+  .vant-co-product-price {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.1rem;
+    color: var(--vant-gold, #c9a84c);
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  /* Divider */
+  .vant-co-divider {
+    border: none;
+    border-top: 0.5px solid var(--vant-border, rgba(201, 168, 76, 0.2));
+    margin: 0;
+  }
+
+  /* Shipping calc */
+  .vant-co-ship-label {
+    font-family: 'Jost', sans-serif;
+    font-size: 0.6rem;
+    font-weight: 400;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--vant-text-muted, #8fa88a);
+    margin-bottom: 10px;
+  }
+
+  .vant-co-ship-row {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 8px;
+  }
+
+  .vant-co-ship-result {
+    margin-top: 10px;
+    font-family: 'Jost', sans-serif;
+    font-size: 0.78rem;
+    color: var(--vant-text-muted, #8fa88a);
+    min-height: 20px;
+  }
+
+  .vant-co-ship-free {
+    color: var(--vant-gold, #c9a84c);
+    font-weight: 500;
+  }
+
+  /* Totals */
+  .vant-co-totals {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .vant-co-total-line {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: 'Jost', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 300;
+    color: var(--vant-text-muted, #8fa88a);
+  }
+
+  .vant-co-total-line.pix-discount {
+    color: var(--vant-gold-light, #e8d08a);
+  }
+
+  .vant-co-total-line.hidden {
+    display: none;
+  }
+
+  .vant-co-total-final {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    border-top: 0.5px solid var(--vant-border, rgba(201, 168, 76, 0.2));
+    padding-top: 16px;
+    margin-top: 4px;
+  }
+
+  .vant-co-total-label {
+    font-family: 'Jost', sans-serif;
+    font-size: 0.62rem;
+    font-weight: 500;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--vant-cream, #f0e8d5);
+  }
+
+  .vant-co-total-value {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.9rem;
+    font-weight: 400;
+    color: var(--vant-gold, #c9a84c);
+    line-height: 1;
+  }
+
+  /* ── CONFIRMATION SCREEN ─────────────────────────────── */
+
+  .vant-co-confirm {
+    display: none;
+    padding: 80px 48px;
+    text-align: center;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    flex: 1;
+  }
+
+  .vant-co-confirm.on {
+    display: flex;
+  }
+
+  .vant-co-confirm-icon {
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    background: rgba(201, 168, 76, 0.1);
+    border: 0.5px solid rgba(201, 168, 76, 0.35);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.8rem;
+  }
+
+  .vant-co-confirm-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1.7rem, 3.5vw, 2.5rem);
+    font-weight: 400;
+    color: var(--vant-cream, #f0e8d5);
+    margin: 0;
+  }
+
+  .vant-co-confirm-msg {
+    font-family: 'Jost', sans-serif;
+    font-size: 0.86rem;
+    font-weight: 300;
+    color: var(--vant-text-muted, #8fa88a);
+    line-height: 1.8;
+    max-width: 460px;
+    margin: 0;
+  }
+
+  .vant-co-confirm-num {
+    font-family: 'Jost', sans-serif;
+    font-size: 0.7rem;
+    font-weight: 500;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--vant-gold, #c9a84c);
+    background: rgba(201, 168, 76, 0.08);
+    border: 0.5px solid rgba(201, 168, 76, 0.25);
+    border-radius: 8px;
+    padding: 10px 22px;
+  }
+
+  .vant-co-continue {
+    background: transparent;
+    border: 0.5px solid var(--vant-border, rgba(201, 168, 76, 0.2));
+    color: var(--vant-gold, #c9a84c);
+    padding: 14px 30px;
+    border-radius: 10px;
+    font-family: 'Jost', sans-serif;
+    font-size: 0.68rem;
+    font-weight: 500;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: border-color 0.25s, background 0.25s;
+  }
+
+  .vant-co-continue:hover {
+    border-color: var(--vant-gold, #c9a84c);
+    background: rgba(201, 168, 76, 0.06);
+  }
+
+  /* ── RESPONSIVE ──────────────────────────────────────── */
+
+  @media screen and (max-width: 989px) {
+    .vant-co-content {
+      grid-template-columns: 1fr 0.75fr;
+    }
+    .vant-co-form-col {
+      padding: 36px 28px;
+    }
+    .vant-co-summary-col {
+      padding: 36px 22px;
+    }
+  }
+
+  @media screen and (max-width: 768px) {
+    .vant-co-content {
+      grid-template-columns: 1fr;
+    }
+    .vant-co-summary-col {
+      order: -1;
+      border-left: none;
+      border-bottom: 0.5px solid var(--vant-border, rgba(201, 168, 76, 0.2));
+      padding: 28px 24px;
+      gap: 18px;
+    }
+    .vant-co-form-col {
+      padding: 28px 24px;
+      gap: 24px;
+    }
+    .vant-co-confirm {
+      padding: 60px 28px;
+    }
+  }
+
+  @media screen and (max-width: 480px) {
+    .vant-checkout-overlay {
+      padding: 8px;
+    }
+    .vant-checkout-modal {
+      width: calc(100vw - 16px);
+      border-radius: 20px;
+    }
+    .vant-co-row {
+      grid-template-columns: 1fr;
+    }
+    .vant-co-pay-tab {
+      padding: 12px 6px;
+      font-size: 0.64rem;
+    }
+    .vant-co-pay-tab .pi {
+      font-size: 1.1rem;
+    }
+  }
+</style>
+
+<!-- ── VANT CHECKOUT MODAL HTML ───────────────────────── -->
+
+<div
+  class="vant-checkout-overlay"
+  id="vant-co-overlay"
+  role="dialog"
+  aria-modal="true"
+  aria-labelledby="vant-co-title"
+>
+  <div class="vant-checkout-modal" id="vant-co-modal">
+
+    <!-- Close -->
+    <button class="vant-co-close" id="vant-co-close" aria-label="Fechar">&#x2715;</button>
+
+    <!-- ── 2-col content ─────────────────────────────────── -->
+    <div class="vant-co-content" id="vant-co-content">
+
+      <!-- LEFT: form -->
+      <div class="vant-co-form-col">
+
+        <h2 class="vant-co-main-title" id="vant-co-title">Finalizar Pedido</h2>
+
+        <!-- STEP 1 · DADOS PESSOAIS -->
+        <div>
+          <p class="vant-co-step">Dados Pessoais</p>
+          <div class="vant-co-fields">
+
+            <div class="vant-co-field">
+              <label for="vco-name">Nome completo</label>
+              <input class="vant-co-input" type="text" id="vco-name"
+                placeholder="Seu nome completo" autocomplete="name">
+            </div>
+
+            <div class="vant-co-field">
+              <label for="vco-email">E-mail</label>
+              <input class="vant-co-input" type="email" id="vco-email"
+                placeholder="seu@email.com" autocomplete="email">
+            </div>
+
+            <div class="vant-co-row">
+              <div class="vant-co-field">
+                <label for="vco-cpf">CPF</label>
+                <input class="vant-co-input" type="text" id="vco-cpf"
+                  placeholder="000.000.000-00" maxlength="14" inputmode="numeric">
+              </div>
+              <div class="vant-co-field">
+                <label for="vco-phone">Telefone</label>
+                <input class="vant-co-input" type="tel" id="vco-phone"
+                  placeholder="(00) 00000-0000" maxlength="15" inputmode="numeric">
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- STEP 2 · ENDEREÇO -->
+        <div>
+          <p class="vant-co-step">Endere&#231;o de Entrega</p>
+          <div class="vant-co-fields">
+
+            <div class="vant-co-field">
+              <label for="vco-cep">CEP</label>
+              <div class="vant-co-cep-row">
+                <input class="vant-co-input" type="text" id="vco-cep"
+                  placeholder="00000-000" maxlength="9" inputmode="numeric">
+                <button class="vant-co-btn-sm" id="vco-cep-btn">Buscar</button>
+              </div>
+            </div>
+
+            <div class="vant-co-field">
+              <label for="vco-street">Rua</label>
+              <input class="vant-co-input" type="text" id="vco-street"
+                placeholder="Nome da rua">
+            </div>
+
+            <div class="vant-co-row">
+              <div class="vant-co-field">
+                <label for="vco-num">N&#250;mero</label>
+                <input class="vant-co-input" type="text" id="vco-num" placeholder="123">
+              </div>
+              <div class="vant-co-field">
+                <label for="vco-comp">Complemento</label>
+                <input class="vant-co-input" type="text" id="vco-comp"
+                  placeholder="Apto, sala&#8230;">
+              </div>
+            </div>
+
+            <div class="vant-co-field">
+              <label for="vco-hood">Bairro</label>
+              <input class="vant-co-input" type="text" id="vco-hood"
+                placeholder="Seu bairro">
+            </div>
+
+            <div class="vant-co-row">
+              <div class="vant-co-field">
+                <label for="vco-city">Cidade</label>
+                <input class="vant-co-input" type="text" id="vco-city"
+                  placeholder="S&#227;o Paulo">
+              </div>
+              <div class="vant-co-field">
+                <label for="vco-state">Estado</label>
+                <select class="vant-co-select" id="vco-state">
+                  <option value="">UF</option>
+                  <option>AC</option><option>AL</option><option>AP</option><option>AM</option>
+                  <option>BA</option><option>CE</option><option>DF</option><option>ES</option>
+                  <option>GO</option><option>MA</option><option>MT</option><option>MS</option>
+                  <option>MG</option><option>PA</option><option>PB</option><option>PR</option>
+                  <option>PE</option><option>PI</option><option>RJ</option><option>RN</option>
+                  <option>RS</option><option>RO</option><option>RR</option><option>SC</option>
+                  <option>SP</option><option>SE</option><option>TO</option>
+                </select>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- STEP 3 · PAGAMENTO -->
+        <div>
+          <p class="vant-co-step">Forma de Pagamento</p>
+
+          <div class="vant-co-pay-tabs">
+            <button class="vant-co-pay-tab active" data-pay="card">
+              <span class="pi">&#x1F4B3;</span><span>Cart&#227;o</span>
+            </button>
+            <button class="vant-co-pay-tab" data-pay="pix">
+              <span class="pi">&#x26A1;</span><span>Pix</span>
+            </button>
+            <button class="vant-co-pay-tab" data-pay="boleto">
+              <span class="pi">&#x1F9FE;</span><span>Boleto</span>
+            </button>
+          </div>
+
+          <!-- CARD PANEL -->
+          <div class="vant-co-panel on" id="vco-panel-card">
+            <div class="vant-co-fields">
+              <div class="vant-co-field">
+                <label for="vco-card-n">N&#250;mero do Cart&#227;o</label>
+                <input class="vant-co-input" type="text" id="vco-card-n"
+                  placeholder="0000 0000 0000 0000" maxlength="19" inputmode="numeric">
+              </div>
+              <div class="vant-co-field">
+                <label for="vco-card-name">Nome no Cart&#227;o</label>
+                <input class="vant-co-input" type="text" id="vco-card-name"
+                  placeholder="Exatamente como no cart&#227;o">
+              </div>
+              <div class="vant-co-row">
+                <div class="vant-co-field">
+                  <label for="vco-expiry">Validade</label>
+                  <input class="vant-co-input" type="text" id="vco-expiry"
+                    placeholder="MM/AA" maxlength="5" inputmode="numeric">
+                </div>
+                <div class="vant-co-field">
+                  <label for="vco-cvv">CVV</label>
+                  <input class="vant-co-input" type="text" id="vco-cvv"
+                    placeholder="000" maxlength="4" inputmode="numeric">
+                </div>
+              </div>
+              <div class="vant-co-field">
+                <label for="vco-install">Parcelamento</label>
+                <select class="vant-co-select" id="vco-install">
+                  <option>1x de R$ &#8212; sem juros</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <!-- PIX PANEL -->
+          <div class="vant-co-panel" id="vco-panel-pix">
+            <div class="vant-co-pix-box">
+              <span class="vant-co-pix-badge">&#x2713; 5% de desconto aplicado</span>
+              <div class="vant-co-pix-code" id="vco-pix-code">
+                00020126360014BR.GOV.BCB.PIX0114contato@vant.com.br5204000053039865405499.005802BR5925VANT SEMIJOIAS PREMIUM6009SAO PAULO62100506VANT016304ABCD
+              </div>
+              <button class="vant-co-pix-copy" id="vco-pix-copy">Copiar c&#243;digo</button>
+              <p class="vant-co-pix-note">
+                Copie o c&#243;digo Pix e finalize o pagamento no seu banco.
+                O pedido &#233; confirmado automaticamente ap&#243;s a compensa&#231;&#227;o.
+              </p>
+            </div>
+          </div>
+
+          <!-- BOLETO PANEL -->
+          <div class="vant-co-panel" id="vco-panel-boleto">
+            <div class="vant-co-boleto-box">
+              <p>O boleto vence em 3 dias &#250;teis.</p>
+              <p>N&#227;o possui desconto e n&#227;o permite parcelamento.</p>
+              <p>A confirma&#231;&#227;o pode levar at&#233; 3 dias &#250;teis ap&#243;s o pagamento.</p>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- SUBMIT -->
+        <div>
+          <button class="vant-co-submit" id="vco-submit">Finalizar Pedido</button>
+          <p class="vant-co-security">&#x1F512; Pagamento 100% seguro e criptografado</p>
+        </div>
+
+      </div><!-- end left col -->
+
+      <!-- RIGHT: summary -->
+      <div class="vant-co-summary-col">
+
+        <h3 class="vant-co-summary-title">Resumo do Pedido</h3>
+
+        <div class="vant-co-product">
+          <div class="vant-co-product-thumb">
+            <svg width="30" height="30" viewBox="0 0 30 30" fill="none"
+              aria-hidden="true">
+              <circle cx="15" cy="15" r="9"   stroke="#c9a84c" stroke-width="1"/>
+              <circle cx="15" cy="15" r="5.5" stroke="#c9a84c" stroke-width="0.5"
+                opacity="0.45"/>
+              <circle cx="15" cy="15" r="2"   fill="#c9a84c" opacity="0.3"/>
+            </svg>
+          </div>
+          <div class="vant-co-product-info">
+            <span class="vant-co-product-name" id="vco-prod-name">&#8212;</span>
+            <span class="vant-co-product-variant">Semijoia premium VANT</span>
+          </div>
+          <span class="vant-co-product-price" id="vco-prod-price">&#8212;</span>
+        </div>
+
+        <hr class="vant-co-divider">
+
+        <!-- Shipping calc -->
+        <div>
+          <p class="vant-co-ship-label">Calcular Frete</p>
+          <div class="vant-co-ship-row">
+            <input class="vant-co-input" type="text" id="vco-cep-ship"
+              placeholder="00000-000" maxlength="9" inputmode="numeric">
+            <button class="vant-co-btn-sm" id="vco-ship-btn">Calcular</button>
+          </div>
+          <p class="vant-co-ship-result" id="vco-ship-result"></p>
+        </div>
+
+        <hr class="vant-co-divider">
+
+        <!-- Totals -->
+        <div class="vant-co-totals">
+          <div class="vant-co-total-line">
+            <span>Subtotal</span>
+            <span id="vco-subtotal">&#8212;</span>
+          </div>
+          <div class="vant-co-total-line pix-discount hidden" id="vco-disc-line">
+            <span>Desconto Pix (5%)</span>
+            <span id="vco-discount">&#8212;</span>
+          </div>
+          <div class="vant-co-total-line">
+            <span>Frete</span>
+            <span id="vco-ship-disp">Calcule pelo CEP</span>
+          </div>
+        </div>
+
+        <div class="vant-co-total-final">
+          <span class="vant-co-total-label">Total</span>
+          <span class="vant-co-total-value" id="vco-total">&#8212;</span>
+        </div>
+
+      </div><!-- end right col -->
+
+    </div><!-- end vant-co-content -->
+
+    <!-- ── CONFIRMATION ──────────────────────────────────── -->
+    <div class="vant-co-confirm" id="vco-confirm">
+      <div class="vant-co-confirm-icon">&#x2713;</div>
+      <h2 class="vant-co-confirm-title">Pedido realizado com sucesso!</h2>
+      <p class="vant-co-confirm-msg">
+        Seu pedido foi recebido pela VANT. Em breve voc&#234; receber&#225; os
+        pr&#243;ximos detalhes no e-mail informado.
+      </p>
+      <span class="vant-co-confirm-num" id="vco-order-num">Pedido #VANT-00000</span>
+      <button class="vant-co-continue" id="vco-continue">Continuar comprando</button>
+    </div>
+
+  </div><!-- end modal -->
+</div><!-- end overlay -->
+
+<script>
+(function () {
+  'use strict';
+
+  /* ── STATE ──────────────────────────────────────────── */
+  var S = { price: 0, name: '', payment: 'card', shipping: null, shipCalc: false };
+
+  /* ── ELEMENT REFS ───────────────────────────────────── */
+  var overlay     = document.getElementById('vant-co-overlay');
+  var content     = document.getElementById('vant-co-content');
+  var confirmBox  = document.getElementById('vco-confirm');
+  var closeBtn    = document.getElementById('vant-co-close');
+  var submitBtn   = document.getElementById('vco-submit');
+  var continueBtn = document.getElementById('vco-continue');
+
+  var elName     = document.getElementById('vco-prod-name');
+  var elPrice    = document.getElementById('vco-prod-price');
+  var elSubtotal = document.getElementById('vco-subtotal');
+  var elDiscLine = document.getElementById('vco-disc-line');
+  var elDiscount = document.getElementById('vco-discount');
+  var elShipDisp = document.getElementById('vco-ship-disp');
+  var elTotal    = document.getElementById('vco-total');
+  var elShipRes  = document.getElementById('vco-ship-result');
+  var elOrderNum = document.getElementById('vco-order-num');
+  var elInstall  = document.getElementById('vco-install');
+
+  var payTabs     = document.querySelectorAll('.vant-co-pay-tab');
+  var panelCard   = document.getElementById('vco-panel-card');
+  var panelPix    = document.getElementById('vco-panel-pix');
+  var panelBoleto = document.getElementById('vco-panel-boleto');
+
+  var cepInput = document.getElementById('vco-cep');
+  var cepBtn   = document.getElementById('vco-cep-btn');
+  var streetEl = document.getElementById('vco-street');
+  var hoodEl   = document.getElementById('vco-hood');
+  var cityEl   = document.getElementById('vco-city');
+  var stateEl  = document.getElementById('vco-state');
+
+  var cepShip = document.getElementById('vco-cep-ship');
+  var shipBtn = document.getElementById('vco-ship-btn');
+  var pixCopy = document.getElementById('vco-pix-copy');
+
+  if (!overlay) return;
+
+  /* ── FORMAT ─────────────────────────────────────────── */
+  function brl(n) {
+    return 'R$ ' + parseFloat(n).toLocaleString('pt-BR', {
+      minimumFractionDigits: 2, maximumFractionDigits: 2
+    });
+  }
+
+  function parsePrice(v) {
+    if (typeof v === 'number') return v;
+    return parseFloat(String(v).replace(/[^\d,\.]/g, '').replace(',', '.')) || 0;
+  }
+
+  /* ── TOTALS ─────────────────────────────────────────── */
+  function recalc() {
+    var sub  = S.price;
+    var disc = 0;
+
+    if (S.payment === 'pix') {
+      disc = sub * 0.05;
+      elDiscLine.classList.remove('hidden');
+      elDiscount.textContent = '− ' + brl(disc);
+    } else {
+      elDiscLine.classList.add('hidden');
+    }
+
+    elSubtotal.textContent = brl(sub);
+    elPrice.textContent    = brl(sub);
+
+    var ship = S.shipCalc ? (S.shipping || 0) : null;
+
+    if (ship === null) {
+      elShipDisp.textContent = 'Calcule pelo CEP';
+      elTotal.textContent    = brl(sub - disc);
+    } else if (ship === 0) {
+      elShipDisp.textContent = 'Grátis';
+      elTotal.textContent    = brl(sub - disc);
+    } else {
+      elShipDisp.textContent = brl(ship);
+      elTotal.textContent    = brl(sub - disc + ship);
+    }
+  }
+
+  /* ── INSTALLMENTS (safe DOM — no innerHTML) ─────────── */
+  function buildInstallments(price) {
+    if (!elInstall) return;
+    var opts = [
+      { n: 1,  r: 0      },
+      { n: 2,  r: 0      },
+      { n: 3,  r: 0      },
+      { n: 6,  r: 0.0199 },
+      { n: 12, r: 0.0299 }
+    ];
+    while (elInstall.firstChild) { elInstall.removeChild(elInstall.firstChild); }
+    opts.forEach(function (o) {
+      var total = price * (1 + o.r);
+      var per   = total / o.n;
+      var label = o.n + 'x de ' + brl(per) + (o.r === 0 ? ' sem juros' : ' com juros');
+      var opt   = document.createElement('option');
+      opt.textContent = label;
+      elInstall.appendChild(opt);
+    });
+  }
+
+  /* ── PAYMENT SWITCH ─────────────────────────────────── */
+  function setPayment(method) {
+    S.payment = method;
+    payTabs.forEach(function (t) { t.classList.remove('active'); });
+    [panelCard, panelPix, panelBoleto].forEach(function (p) { p.classList.remove('on'); });
+
+    var tab = document.querySelector('.vant-co-pay-tab[data-pay="' + method + '"]');
+    if (tab) tab.classList.add('active');
+
+    var panels = { card: panelCard, pix: panelPix, boleto: panelBoleto };
+    if (panels[method]) panels[method].classList.add('on');
+
+    recalc();
+  }
+
+  payTabs.forEach(function (t) {
+    t.addEventListener('click', function () { setPayment(t.dataset.pay); });
+  });
+
+  /* ── INPUT MASKS ────────────────────────────────────── */
+  function mask(input, fn) {
+    input.addEventListener('input', function () {
+      var pos   = input.selectionStart;
+      var oldL  = input.value.length;
+      input.value = fn(input.value);
+      var delta = input.value.length - oldL;
+      try { input.setSelectionRange(pos + delta, pos + delta); } catch (e) {}
+    });
+  }
+
+  mask(document.getElementById('vco-cpf'), function (v) {
+    v = v.replace(/\D/g, '').slice(0, 11);
+    if (v.length > 9) return v.replace(/(\d{3})(\d{3})(\d{3})(\d{1,2})/, '$1.$2.$3-$4');
+    if (v.length > 6) return v.replace(/(\d{3})(\d{3})(\d+)/, '$1.$2.$3');
+    if (v.length > 3) return v.replace(/(\d{3})(\d+)/, '$1.$2');
+    return v;
+  });
+
+  mask(document.getElementById('vco-phone'), function (v) {
+    v = v.replace(/\D/g, '').slice(0, 11);
+    if (v.length > 10) return v.replace(/(\d{2})(\d{5})(\d{4})/, '($1) $2-$3');
+    if (v.length > 6)  return v.replace(/(\d{2})(\d{4,5})(\d{0,4})/, '($1) $2-$3');
+    if (v.length > 2)  return v.replace(/(\d{2})(\d+)/, '($1) $2');
+    return v;
+  });
+
+  mask(document.getElementById('vco-card-n'), function (v) {
+    return v.replace(/\D/g, '').slice(0, 16).replace(/(\d{4})(?=\d)/g, '$1 ');
+  });
+
+  mask(document.getElementById('vco-expiry'), function (v) {
+    v = v.replace(/\D/g, '').slice(0, 4);
+    return v.length > 2 ? v.slice(0, 2) + '/' + v.slice(2) : v;
+  });
+
+  document.getElementById('vco-cvv').addEventListener('input', function () {
+    this.value = this.value.replace(/\D/g, '').slice(0, 4);
+  });
+
+  function cepMask(v) {
+    v = v.replace(/\D/g, '').slice(0, 8);
+    return v.length > 5 ? v.slice(0, 5) + '-' + v.slice(5) : v;
+  }
+  mask(cepInput, cepMask);
+  mask(cepShip,  cepMask);
+
+  /* ── CEP ADDRESS LOOKUP ─────────────────────────────── */
+  /* TODO: Replace with real ViaCEP API call:
+     fetch('https://viacep.com.br/ws/' + cep + '/json/')
+       .then(r => r.json())
+       .then(data => { streetEl.value = data.logradouro; ... }) */
+  cepBtn.addEventListener('click', function () {
+    if (cepInput.value.replace(/\D/g, '').length < 8) return;
+    cepBtn.disabled = true;
+    cepBtn.textContent = '...';
+    setTimeout(function () {
+      streetEl.value       = 'Rua das Palmeiras';
+      hoodEl.value         = 'Jardim Esmeralda';
+      cityEl.value         = 'São Paulo';
+      stateEl.value        = 'SP';
+      cepBtn.disabled      = false;
+      cepBtn.textContent   = 'Buscar';
+    }, 800);
+  });
+
+  /* ── SHIPPING CALCULATION ───────────────────────────── */
+  /* TODO: Replace with Shopify Shipping Rates API or carrier rates when going live */
+  shipBtn.addEventListener('click', function () {
+    var cep = cepShip.value.replace(/\D/g, '');
+    if (!cep) {
+      elShipRes.textContent = 'Informe o CEP para calcular.';
+      return;
+    }
+    shipBtn.disabled = true;
+    elShipRes.textContent = 'Calculando…';
+    setTimeout(function () {
+      shipBtn.disabled = false;
+      S.shipCalc = true;
+      if (S.price >= 199) {
+        S.shipping = 0;
+        /* Safe DOM node — no innerHTML */
+        while (elShipRes.firstChild) { elShipRes.removeChild(elShipRes.firstChild); }
+        var span = document.createElement('span');
+        span.className   = 'vant-co-ship-free';
+        span.textContent = '✓ Frete Grátis';
+        elShipRes.appendChild(span);
+      } else {
+        S.shipping = 15.90;
+        elShipRes.textContent = 'Frete: R$ 15,90';
+      }
+      recalc();
+    }, 600);
+  });
+
+  /* ── PIX COPY ───────────────────────────────────────── */
+  pixCopy.addEventListener('click', function () {
+    var code = document.getElementById('vco-pix-code').textContent.trim();
+    if (navigator.clipboard) { navigator.clipboard.writeText(code); }
+    pixCopy.textContent = 'Copiado ✓';
+    setTimeout(function () { pixCopy.textContent = 'Copiar código'; }, 2200);
+  });
+
+  /* ── OPEN / CLOSE ───────────────────────────────────── */
+  function openModal() {
+    overlay.classList.add('is-active');
+    document.body.style.overflow = 'hidden';
+    closeBtn.focus();
+  }
+
+  function closeModal() {
+    overlay.classList.remove('is-active');
+    document.body.style.overflow = '';
+    confirmBox.classList.remove('on');
+    content.style.display = '';
+  }
+
+  closeBtn.addEventListener('click', closeModal);
+  overlay.addEventListener('click', function (e) {
+    if (e.target === overlay) closeModal();
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && overlay.classList.contains('is-active')) closeModal();
+  });
+
+  /* ── SUBMIT → CONFIRMATION ──────────────────────────── */
+  submitBtn.addEventListener('click', function (e) {
+    e.preventDefault();
+    /* TODO: When integrating with Shopify:
+       1. POST item to /cart/add.js
+       2. Redirect to /checkout or open native Shopify checkout
+       fetch('/cart/add.js', {
+         method: 'POST',
+         headers: { 'Content-Type': 'application/json' },
+         body: JSON.stringify({ items: [{ id: variantId, quantity: 1 }] })
+       }).then(() => { window.location.href = '/checkout'; }); */
+    var num = 'VANT-' + String(Math.floor(10000 + Math.random() * 90000));
+    elOrderNum.textContent = 'Pedido #' + num;
+    content.style.display  = 'none';
+    confirmBox.classList.add('on');
+  });
+
+  continueBtn.addEventListener('click', closeModal);
+
+  /* ── GLOBAL OPEN FUNCTION ───────────────────────────── */
+  /* Overrides the placeholder set in vant-products.liquid.
+     TODO: Accept variantId as 3rd param and wire to /cart/add.js before opening. */
+  window.openCheckout = function (nome, preco) {
+    S.name     = nome || 'Produto VANT';
+    S.price    = parsePrice(preco);
+    S.shipping = null;
+    S.shipCalc = false;
+
+    elName.textContent    = S.name;
+    elShipRes.textContent = '';
+    cepShip.value         = '';
+
+    confirmBox.classList.remove('on');
+    content.style.display = '';
+
+    setPayment('card');
+    buildInstallments(S.price);
+    recalc();
+    openModal();
+  };
+
+})();
+</script>

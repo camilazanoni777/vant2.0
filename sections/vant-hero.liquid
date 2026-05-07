@@ -2,9 +2,9 @@
   /* ── VANT HERO ──────────────────────────────────────── */
 
   @keyframes vant-pulse {
-    0%   { transform: translate(-50%, -50%) scale(1);    opacity: 0.35; }
-    50%  { transform: translate(-50%, -50%) scale(1.04); opacity: 0.18; }
-    100% { transform: translate(-50%, -50%) scale(1);    opacity: 0.35; }
+    0%   { transform: translate(-50%, -50%) scale(1);    opacity: 0.20; }
+    50%  { transform: translate(-50%, -50%) scale(1.04); opacity: 0.09; }
+    100% { transform: translate(-50%, -50%) scale(1);    opacity: 0.20; }
   }
 
   @keyframes vant-fadeUp {
@@ -33,9 +33,9 @@
     justify-content: center;
     overflow: hidden;
     background:
-      radial-gradient(circle at 50% 50%, rgba(201, 168, 76, 0.14) 0%, transparent 32%),
-      radial-gradient(circle at 50% 40%, rgba(42, 79, 53, 0.42) 0%, transparent 45%),
-      linear-gradient(180deg, var(--vant-deep, #0a110d) 0%, var(--vant-forest, #0f1f15) 55%, var(--vant-deep, #0a110d) 100%);
+      radial-gradient(circle at 50% 42%, rgba(217, 167, 160, 0.10) 0%, transparent 34%),
+      radial-gradient(circle at center, rgba(201, 168, 76, 0.10) 0%, transparent 38%),
+      linear-gradient(180deg, var(--vant-deep, #0a110d) 0%, var(--vant-forest, #101b14) 55%, var(--vant-deep, #0a110d) 100%);
   }
 
   /* Concentric rings */
@@ -43,7 +43,7 @@
     position: absolute;
     top: 50%;
     left: 50%;
-    border: 0.5px solid rgba(201, 168, 76, 0.35);
+    border: 0.5px solid rgba(232, 208, 138, 0.15);
     border-radius: 50%;
     pointer-events: none;
     animation: vant-pulse 6s ease-in-out infinite;
@@ -58,7 +58,7 @@
   .vant-hero__ring--inner {
     width: 48vmin;
     height: 48vmin;
-    border-color: rgba(201, 168, 76, 0.22);
+    border-color: rgba(217, 167, 160, 0.10);
     animation-delay: -3s;
   }
 
@@ -69,8 +69,22 @@
     inset: 0;
     background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
     background-size: 200px 200px;
-    opacity: 0.4;
+    opacity: 0.20;
     pointer-events: none;
+  }
+
+  /* Brilho editorial rosé — luz em pele iluminada */
+  .vant-hero::after {
+    content: '';
+    position: absolute;
+    top: -5%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 70%;
+    height: 60%;
+    background: radial-gradient(ellipse at 50% 0%, rgba(217, 167, 160, 0.07) 0%, transparent 68%);
+    pointer-events: none;
+    z-index: 1;
   }
 
   /* Content wrapper */
@@ -138,8 +152,8 @@
     font-style: italic;
     font-weight: 400;
     font-size: clamp(1.1rem, 2.2vw, 1.5rem);
-    letter-spacing: 1px;
-    color: var(--vant-gold-light, #e8d08a);
+    letter-spacing: 0.5px;
+    color: var(--vant-champagne, #ead9bd);
     margin: 0 0 1.4rem 0;
     animation: vant-fadeUp 0.9s ease both;
     animation-delay: 0.4s;
@@ -165,9 +179,10 @@
     align-items: center;
     gap: 0.8rem;
     border: 0.5px solid var(--vant-gold, #c9a84c);
-    color: var(--vant-gold, #c9a84c);
+    color: var(--vant-gold-light, #e8d08a);
     background: transparent;
-    padding: 1rem 2.4rem;
+    padding: 14px 34px;
+    border-radius: 999px;
     font-family: 'Jost', sans-serif;
     font-weight: 400;
     font-size: 0.65rem;
@@ -175,40 +190,18 @@
     text-transform: uppercase;
     text-decoration: none;
     transition:
-      background 0.35s ease,
-      color 0.35s ease,
-      letter-spacing 0.35s ease,
-      box-shadow 0.35s ease;
+      background 0.4s ease,
+      color 0.4s ease,
+      box-shadow 0.4s ease;
     cursor: pointer;
     animation: vant-fadeUp 0.9s ease both;
     animation-delay: 0.6s;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .vant-hero__btn::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: var(--vant-gold, #c9a84c);
-    transform: translateX(-101%);
-    transition: transform 0.35s ease;
-    z-index: 0;
-  }
-
-  .vant-hero__btn span {
-    position: relative;
-    z-index: 1;
-  }
-
-  .vant-hero__btn:hover::before {
-    transform: translateX(0);
   }
 
   .vant-hero__btn:hover {
+    background: var(--vant-gold-light, #e8d08a);
     color: var(--vant-deep, #0a110d);
-    letter-spacing: 3.5px;
-    box-shadow: 0 4px 30px rgba(201, 168, 76, 0.25);
+    box-shadow: 0 0 28px rgba(232, 208, 138, 0.18);
   }
 
   /* Scroll indicator */
@@ -330,13 +323,13 @@
       "type": "text",
       "id": "subtitle",
       "label": "Subtítulo",
-      "default": "Nascida para durar. Feita para ser vista."
+      "default": "Delicada no detalhe. Forte na presença."
     },
     {
       "type": "textarea",
       "id": "paragraph",
       "label": "Parágrafo",
-      "default": "Semijoias premium criadas para acompanhar sua rotina com presença, brilho e sofisticação atemporal."
+      "default": "Semijoias premium criadas para acompanhar sua pele, sua rotina e os momentos em que você decide ser inesquecível."
     },
     {
       "type": "text",

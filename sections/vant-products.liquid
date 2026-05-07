@@ -1,0 +1,762 @@
+<style>
+  /* ── VANT PRODUCTS ──────────────────────────────────── */
+
+  .vant-products {
+    background: linear-gradient(180deg,
+      var(--vant-deep,   #0a110d) 0%,
+      var(--vant-forest, #0f1f15) 48%,
+      var(--vant-deep,   #0a110d) 100%
+    );
+    padding: 100px 3rem 120px;
+  }
+
+  .vant-products__inner {
+    max-width: 1440px;
+    margin: 0 auto;
+  }
+
+  /* ── SECTION HEADER ─────────────────────────────────── */
+
+  .vant-products__header {
+    margin-bottom: 48px;
+  }
+
+  .vant-products__label {
+    display: inline-flex;
+    align-items: center;
+    gap: 1rem;
+    font-family: 'Jost', sans-serif;
+    font-weight: 400;
+    font-size: 0.6rem;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--vant-gold, #c9a84c);
+    margin-bottom: 1.2rem;
+  }
+
+  .vant-products__label::after {
+    content: '';
+    display: block;
+    width: 60px;
+    height: 0.5px;
+    background: linear-gradient(to right, rgba(201, 168, 76, 0.45), transparent);
+  }
+
+  .vant-products__title {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 400;
+    font-size: clamp(1.9rem, 3.5vw, 3rem);
+    line-height: 1.2;
+    color: var(--vant-cream, #f0e8d5);
+    margin: 0;
+    max-width: 480px;
+  }
+
+  /* ── FILTER TABS ────────────────────────────────────── */
+
+  .vant-products__filters {
+    display: flex;
+    align-items: flex-end;
+    gap: 0;
+    margin-bottom: 52px;
+    border-bottom: 0.5px solid var(--vant-border, rgba(201, 168, 76, 0.2));
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+
+  .vant-products__filters::-webkit-scrollbar { display: none; }
+
+  .vant-filter-btn {
+    background: transparent;
+    border: none;
+    border-bottom: 1.5px solid transparent;
+    color: var(--vant-text-muted, #8fa88a);
+    text-transform: uppercase;
+    font-size: 0.63rem;
+    letter-spacing: 2px;
+    font-family: 'Jost', sans-serif;
+    font-weight: 400;
+    cursor: pointer;
+    padding: 0.5rem 1.1rem 0.85rem;
+    white-space: nowrap;
+    flex-shrink: 0;
+    transition: color 0.3s ease, border-color 0.3s ease;
+    margin-bottom: -0.5px;
+  }
+
+  .vant-filter-btn.active {
+    color: var(--vant-gold, #c9a84c);
+    border-bottom-color: var(--vant-gold, #c9a84c);
+  }
+
+  .vant-filter-btn:hover:not(.active) {
+    color: var(--vant-cream, #f0e8d5);
+  }
+
+  /* ── GRID ───────────────────────────────────────────── */
+
+  .vant-products__grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+
+  /* ── CARD ───────────────────────────────────────────── */
+
+  .vant-product-card {
+    background: var(--vant-forest, #0f1f15);
+    border: 0.5px solid var(--vant-border, rgba(201, 168, 76, 0.2));
+    border-radius: 24px;
+    overflow: hidden;
+    position: relative;
+    cursor: pointer;
+    /* Fade-up initial state — JS adds .is-visible */
+    opacity: 0;
+    transform: translateY(24px);
+    transition:
+      opacity  0.65s ease,
+      transform 0.65s ease,
+      border-color 0.4s ease,
+      box-shadow 0.4s ease;
+  }
+
+  .vant-product-card.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .vant-product-card.is-visible:hover {
+    border-color: rgba(201, 168, 76, 0.45);
+    transform: translateY(-5px);
+    box-shadow:
+      0 28px 72px rgba(0, 0, 0, 0.48),
+      0 0 0 0.5px rgba(201, 168, 76, 0.18);
+  }
+
+  /* ── IMAGE AREA ─────────────────────────────────────── */
+
+  .vant-product-image {
+    aspect-ratio: 1 / 1;
+    background: var(--vant-moss, #1a3022);
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+
+  /* ── BADGE ──────────────────────────────────────────── */
+
+  .vant-badge {
+    position: absolute;
+    top: 14px;
+    left: 14px;
+    z-index: 3;
+    font-family: 'Jost', sans-serif;
+    font-size: 0.55rem;
+    font-weight: 500;
+    letter-spacing: 1.8px;
+    text-transform: uppercase;
+    border-radius: 50px;
+    padding: 4px 10px 3px;
+    line-height: 1;
+    pointer-events: none;
+  }
+
+  .vant-badge--novo {
+    background: var(--vant-gold, #c9a84c);
+    color: var(--vant-deep, #0a110d);
+  }
+
+  .vant-badge--lancamento {
+    background: transparent;
+    border: 0.5px solid var(--vant-gold, #c9a84c);
+    color: var(--vant-gold, #c9a84c);
+  }
+
+  .vant-badge--limitado {
+    background: rgba(10, 17, 13, 0.72);
+    border: 0.5px solid rgba(201, 168, 76, 0.35);
+    color: var(--vant-gold, #c9a84c);
+  }
+
+  /* ── SVG ICON ───────────────────────────────────────── */
+
+  .vant-product-icon {
+    width: 54%;
+    height: 54%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0.27;
+    transition: opacity 0.4s ease, transform 0.5s ease;
+    pointer-events: none;
+  }
+
+  .vant-product-icon svg {
+    width: 100%;
+    height: 100%;
+  }
+
+  .vant-product-card.is-visible:hover .vant-product-icon {
+    opacity: 0.44;
+    transform: scale(1.06);
+  }
+
+  /* ── WISHLIST BUTTON ────────────────────────────────── */
+
+  .vant-wishlist-btn {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    z-index: 3;
+    width: 34px;
+    height: 34px;
+    background: rgba(10, 17, 13, 0.7);
+    border: 0.5px solid var(--vant-border, rgba(201, 168, 76, 0.2));
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    opacity: 0;
+    transform: translateY(-4px) scale(0.88);
+    transition:
+      opacity 0.3s ease,
+      transform 0.3s ease,
+      background 0.3s ease,
+      border-color 0.3s ease;
+    color: var(--vant-text-muted, #8fa88a);
+  }
+
+  .vant-wishlist-btn svg {
+    width: 13px;
+    height: 13px;
+    transition: fill 0.25s ease;
+  }
+
+  .vant-product-card.is-visible:hover .vant-wishlist-btn {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+
+  .vant-wishlist-btn.is-active {
+    background: rgba(201, 168, 76, 0.14);
+    border-color: rgba(201, 168, 76, 0.45);
+    color: var(--vant-gold, #c9a84c);
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+
+  .vant-wishlist-btn.is-active svg path {
+    fill: var(--vant-gold, #c9a84c);
+  }
+
+  /* ── PRODUCT INFO ───────────────────────────────────── */
+
+  .vant-product-info {
+    padding: 18px 20px 22px;
+  }
+
+  .vant-product-category {
+    display: block;
+    font-family: 'Jost', sans-serif;
+    font-weight: 400;
+    font-size: 0.58rem;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--vant-text-muted, #8fa88a);
+    margin-bottom: 0.45rem;
+  }
+
+  .vant-product-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 500;
+    font-size: 1.15rem;
+    color: var(--vant-cream, #f0e8d5);
+    line-height: 1.3;
+    margin: 0 0 0.65rem 0;
+    transition: color 0.3s ease;
+  }
+
+  .vant-product-card.is-visible:hover .vant-product-name {
+    color: #fff;
+  }
+
+  .vant-product-price {
+    font-family: 'Jost', sans-serif;
+    font-weight: 500;
+    font-size: 0.9rem;
+    color: var(--vant-gold, #c9a84c);
+    margin: 0;
+    letter-spacing: 0.3px;
+  }
+
+  /* Cart badge spring on update */
+  .vant-cart-badge {
+    transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  /* ── RESPONSIVE ─────────────────────────────────────── */
+
+  @media screen and (max-width: 989px) {
+    .vant-products {
+      padding: 72px 2rem 80px;
+    }
+
+    .vant-products__grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+    }
+
+    .vant-products__header { margin-bottom: 40px; }
+    .vant-products__filters { margin-bottom: 36px; }
+  }
+
+  @media screen and (max-width: 600px) {
+    .vant-products {
+      padding: 60px 1.2rem 68px;
+    }
+
+    .vant-products__grid {
+      grid-template-columns: 1fr;
+      gap: 14px;
+    }
+
+    .vant-products__title {
+      font-size: 1.75rem;
+    }
+
+    .vant-filter-btn {
+      font-size: 0.58rem;
+      padding: 0.45rem 0.85rem 0.75rem;
+      letter-spacing: 1.5px;
+    }
+
+    /* Always show wishlist on mobile (no hover) */
+    .vant-wishlist-btn {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+  }
+</style>
+
+<section class="vant-products" aria-labelledby="vant-products-title">
+  <div class="vant-products__inner">
+
+    {%- comment -%} Section header {%- endcomment -%}
+    <header class="vant-products__header">
+      <p class="vant-products__label">{{ section.settings.label }}</p>
+      <h2 class="vant-products__title" id="vant-products-title">{{ section.settings.title }}</h2>
+    </header>
+
+    {%- comment -%} Filter tabs {%- endcomment -%}
+    <div class="vant-products__filters" role="group" aria-label="Filtrar produtos">
+      <button class="vant-filter-btn active" data-filter="todos" aria-pressed="true">
+        {{ section.settings.tab_all }}
+      </button>
+      <button class="vant-filter-btn" data-filter="novidades" aria-pressed="false">
+        {{ section.settings.tab_new }}
+      </button>
+      <button class="vant-filter-btn" data-filter="mais-vendidos" aria-pressed="false">
+        {{ section.settings.tab_bestseller }}
+      </button>
+      <button class="vant-filter-btn" data-filter="lancamento" aria-pressed="false">
+        {{ section.settings.tab_launch }}
+      </button>
+    </div>
+
+    {%- comment -%} Product grid {%- endcomment -%}
+    <div class="vant-products__grid" id="vant-grid-{{ section.id }}">
+
+      {%- for block in section.blocks -%}
+
+        <div
+          class="vant-product-card"
+          data-tab="{{ block.settings.tab }}"
+          data-name="{{ block.settings.name | escape }}"
+          data-price="{{ block.settings.price | escape }}"
+          role="button"
+          tabindex="0"
+          aria-label="{{ block.settings.name }}, {{ block.settings.price }}"
+          {{ block.shopify_attributes }}
+        >
+
+          {%- comment -%} Image area {%- endcomment -%}
+          <div class="vant-product-image">
+
+            {%- unless block.settings.badge == 'none' -%}
+              <span class="vant-badge vant-badge--{{ block.settings.badge }}" aria-label="
+                {%- case block.settings.badge -%}
+                  {%- when 'novo' -%}Novo
+                  {%- when 'lancamento' -%}Lançamento
+                  {%- when 'limitado' -%}Limitado
+                {%- endcase -%}
+              ">
+                {%- case block.settings.badge -%}
+                  {%- when 'novo' -%}NOVO
+                  {%- when 'lancamento' -%}LANÇAMENTO
+                  {%- when 'limitado' -%}LIMITADO
+                {%- endcase -%}
+              </span>
+            {%- endunless -%}
+
+            {%- comment -%} Decorative SVG placeholder {%- endcomment -%}
+            <div class="vant-product-icon" aria-hidden="true">
+              {%- case block.settings.icon -%}
+
+                {%- when 'ring' -%}
+                <svg viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <circle cx="60" cy="60" r="44" stroke="#c9a84c" stroke-width="1.2"/>
+                  <circle cx="60" cy="60" r="30" stroke="#c9a84c" stroke-width="0.5" stroke-dasharray="4 5"/>
+                  <circle cx="60" cy="16" r="4.5" stroke="#c9a84c" stroke-width="0.8" fill="rgba(201,168,76,0.08)"/>
+                </svg>
+
+                {%- when 'pendant' -%}
+                <svg viewBox="0 0 100 148" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <line x1="50" y1="5" x2="50" y2="30" stroke="#c9a84c" stroke-width="1" stroke-linecap="round"/>
+                  <circle cx="50" cy="22" r="9" stroke="#c9a84c" stroke-width="1"/>
+                  <path d="M50 42 C28 42, 14 64, 14 82 C14 110, 30 142, 50 142 C70 142, 86 110, 86 82 C86 64, 72 42, 50 42Z" stroke="#c9a84c" stroke-width="1"/>
+                  <circle cx="50" cy="95" r="9" stroke="#c9a84c" stroke-width="0.5" stroke-dasharray="2.5 3"/>
+                </svg>
+
+                {%- when 'drop' -%}
+                <svg viewBox="0 0 72 140" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <line x1="36" y1="5" x2="36" y2="28" stroke="#c9a84c" stroke-width="1" stroke-linecap="round"/>
+                  <circle cx="36" cy="21" r="8" stroke="#c9a84c" stroke-width="1"/>
+                  <path d="M36 40 C18 48, 10 68, 10 83 C10 109, 21 133, 36 133 C51 133, 62 109, 62 83 C62 68, 54 48, 36 40Z" stroke="#c9a84c" stroke-width="1"/>
+                  <ellipse cx="36" cy="100" rx="10" ry="15" stroke="#c9a84c" stroke-width="0.5" stroke-dasharray="2 3"/>
+                </svg>
+
+                {%- when 'oval' -%}
+                <svg viewBox="0 0 160 96" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <ellipse cx="80" cy="48" rx="70" ry="36" stroke="#c9a84c" stroke-width="1.2"/>
+                  <ellipse cx="80" cy="48" rx="50" ry="22" stroke="#c9a84c" stroke-width="0.5" stroke-dasharray="4 5"/>
+                  <circle cx="10"  cy="48" r="4.5" fill="#c9a84c" opacity="0.45"/>
+                  <circle cx="150" cy="48" r="4.5" fill="#c9a84c" opacity="0.45"/>
+                </svg>
+
+                {%- when 'cluster' -%}
+                <svg viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <circle cx="60" cy="60" r="18" stroke="#c9a84c" stroke-width="1.2"/>
+                  <circle cx="26" cy="36" r="11" stroke="#c9a84c" stroke-width="0.9"/>
+                  <circle cx="94" cy="36" r="11" stroke="#c9a84c" stroke-width="0.9"/>
+                  <circle cx="26" cy="84" r="11" stroke="#c9a84c" stroke-width="0.9"/>
+                  <circle cx="94" cy="84" r="11" stroke="#c9a84c" stroke-width="0.9"/>
+                  <line x1="37" y1="43" x2="47" y2="51" stroke="#c9a84c" stroke-width="0.5"/>
+                  <line x1="83" y1="43" x2="73" y2="51" stroke="#c9a84c" stroke-width="0.5"/>
+                  <line x1="37" y1="77" x2="47" y2="69" stroke="#c9a84c" stroke-width="0.5"/>
+                  <line x1="83" y1="77" x2="73" y2="69" stroke="#c9a84c" stroke-width="0.5"/>
+                </svg>
+
+                {%- else -%}
+                <svg viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <circle cx="60" cy="60" r="44" stroke="#c9a84c" stroke-width="1"/>
+                </svg>
+
+              {%- endcase -%}
+            </div>
+
+            {%- comment -%} Wishlist button {%- endcomment -%}
+            <button class="vant-wishlist-btn" aria-label="Adicionar aos favoritos" type="button">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+              </svg>
+            </button>
+
+          </div>
+
+          {%- comment -%} Product info {%- endcomment -%}
+          <div class="vant-product-info">
+            <span class="vant-product-category">{{ block.settings.category }}</span>
+            <h3 class="vant-product-name">{{ block.settings.name }}</h3>
+            <p class="vant-product-price">{{ block.settings.price }}</p>
+          </div>
+
+        </div>
+
+      {%- endfor -%}
+
+    </div>
+  </div>
+</section>
+
+<script>
+(function () {
+  'use strict';
+
+  /* ── Scope to this section instance ───────────────── */
+  var sectionEl = document.getElementById('shopify-section-{{ section.id }}');
+  if (!sectionEl) return;
+
+  var filterBtns = sectionEl.querySelectorAll('.vant-filter-btn');
+  var cards      = sectionEl.querySelectorAll('.vant-product-card');
+
+  /* ── FILTER ─────────────────────────────────────────── */
+  function filterProducts(filter) {
+    /* 1 — fade everything out */
+    cards.forEach(function (card) {
+      if (card.style.display === 'none') return;
+      card.style.opacity    = '0';
+      card.style.transform  = 'translateY(8px)';
+    });
+
+    setTimeout(function () {
+      /* 2 — show / hide */
+      cards.forEach(function (card) {
+        var matches = (filter === 'todos') || (card.dataset.tab === filter);
+        if (matches) {
+          card.style.display = '';
+          card.classList.add('is-visible');
+        } else {
+          card.style.display = 'none';
+        }
+      });
+
+      /* 3 — fade visible cards back in */
+      setTimeout(function () {
+        cards.forEach(function (card) {
+          if (card.style.display !== 'none') {
+            card.style.opacity   = '';
+            card.style.transform = '';
+          }
+        });
+      }, 30);
+
+    }, 220);
+  }
+
+  filterBtns.forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      filterBtns.forEach(function (b) {
+        b.classList.remove('active');
+        b.setAttribute('aria-pressed', 'false');
+      });
+      btn.classList.add('active');
+      btn.setAttribute('aria-pressed', 'true');
+      filterProducts(btn.dataset.filter);
+    });
+  });
+
+  /* ── CARD CLICK → openCheckout ───────────────────── */
+  cards.forEach(function (card) {
+    /* Keyboard support */
+    card.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        triggerCard(card);
+      }
+    });
+
+    card.addEventListener('click', function (e) {
+      if (e.target.closest('.vant-wishlist-btn')) return;
+      triggerCard(card);
+    });
+  });
+
+  function triggerCard(card) {
+    var name  = card.dataset.name  || '';
+    var price = card.dataset.price || '';
+    if (typeof window.openCheckout === 'function') {
+      window.openCheckout(name, price);
+    }
+  }
+
+  /* ── WISHLIST TOGGLE ─────────────────────────────── */
+  sectionEl.querySelectorAll('.vant-wishlist-btn').forEach(function (btn) {
+    btn.addEventListener('click', function (e) {
+      e.stopPropagation();
+      var isNowActive = !btn.classList.contains('is-active');
+      btn.classList.toggle('is-active', isNowActive);
+      btn.setAttribute('aria-label',
+        isNowActive ? 'Remover dos favoritos' : 'Adicionar aos favoritos'
+      );
+    });
+  });
+
+  /* ── INTERSECTION OBSERVER — fade-up on scroll ───── */
+  function revealCard(card, delay) {
+    setTimeout(function () {
+      card.classList.add('is-visible');
+    }, delay || 0);
+  }
+
+  if ('IntersectionObserver' in window) {
+    var observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (!entry.isIntersecting) return;
+        var card  = entry.target;
+        var delay = parseInt(card.dataset.revealDelay, 10) || 0;
+        revealCard(card, delay);
+        observer.unobserve(card);
+      });
+    }, { threshold: 0.08, rootMargin: '0px 0px -32px 0px' });
+
+    cards.forEach(function (card, i) {
+      /* stagger by column position (0, 1, 2) */
+      card.dataset.revealDelay = (i % 3) * 85;
+      observer.observe(card);
+    });
+  } else {
+    /* Fallback for browsers without IntersectionObserver */
+    cards.forEach(function (card) { card.classList.add('is-visible'); });
+  }
+
+})();
+
+/* ── GLOBAL: openCheckout placeholder ─────────────────
+   Will be replaced/extended in the checkout modal prompt.
+   Cart badge increments visually with a spring animation.
+──────────────────────────────────────────────────────── */
+if (!window.openCheckout) {
+  window.openCheckout = function (nomeProduto, preco) {
+    console.log('[VANT] Produto selecionado:', nomeProduto, preco);
+
+    /* Visual cart badge increment */
+    var badge = document.querySelector('.vant-cart-badge');
+    if (badge) {
+      var current = parseInt(badge.textContent, 10) || 0;
+      badge.textContent = current + 1;
+      badge.style.transform = 'scale(1.5)';
+      setTimeout(function () { badge.style.transform = ''; }, 260);
+    }
+  };
+}
+</script>
+
+{% schema %}
+{
+  "name": "VANT Produtos",
+  "class": "vant-products-section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "label",
+      "label": "Label da seção",
+      "default": "COLEÇÃO"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Título da seção",
+      "default": "Peças que ficam na memória"
+    },
+    {
+      "type": "header",
+      "content": "Abas de filtro"
+    },
+    {
+      "type": "text",
+      "id": "tab_all",
+      "label": "Aba: Todos",
+      "default": "Todos"
+    },
+    {
+      "type": "text",
+      "id": "tab_new",
+      "label": "Aba: Novidades",
+      "default": "Novidades"
+    },
+    {
+      "type": "text",
+      "id": "tab_bestseller",
+      "label": "Aba: Mais Vendidos",
+      "default": "Mais Vendidos"
+    },
+    {
+      "type": "text",
+      "id": "tab_launch",
+      "label": "Aba: Edição Lançamento",
+      "default": "Edição Lançamento"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "product",
+      "name": "Produto",
+      "settings": [
+        {
+          "type": "text",
+          "id": "name",
+          "label": "Nome do produto",
+          "default": "Produto VANT"
+        },
+        {
+          "type": "text",
+          "id": "category",
+          "label": "Categoria",
+          "default": "Anéis"
+        },
+        {
+          "type": "text",
+          "id": "price",
+          "label": "Preço",
+          "default": "R$199"
+        },
+        {
+          "type": "select",
+          "id": "badge",
+          "label": "Badge",
+          "options": [
+            { "value": "none",       "label": "Sem badge" },
+            { "value": "novo",       "label": "NOVO" },
+            { "value": "lancamento", "label": "LANÇAMENTO" },
+            { "value": "limitado",   "label": "LIMITADO" }
+          ],
+          "default": "none"
+        },
+        {
+          "type": "select",
+          "id": "tab",
+          "label": "Filtro / Aba",
+          "options": [
+            { "value": "todos",        "label": "Todos" },
+            { "value": "novidades",    "label": "Novidades" },
+            { "value": "mais-vendidos","label": "Mais Vendidos" },
+            { "value": "lancamento",   "label": "Edição Lançamento" }
+          ],
+          "default": "todos"
+        },
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Ícone decorativo",
+          "options": [
+            { "value": "ring",    "label": "Anel" },
+            { "value": "pendant", "label": "Colar / Pingente" },
+            { "value": "drop",    "label": "Brinco / Gota" },
+            { "value": "oval",    "label": "Pulseira / Oval" },
+            { "value": "cluster", "label": "Conjunto / Cluster" }
+          ],
+          "default": "ring"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link do produto (opcional)"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "VANT Produtos",
+      "blocks": [
+        { "type": "product", "settings": { "name": "Anel Selva Dourada",    "category": "Anéis",     "price": "R$189", "badge": "novo",       "tab": "novidades",    "icon": "ring"    } },
+        { "type": "product", "settings": { "name": "Anel Folha Etérea",     "category": "Anéis",     "price": "R$149", "badge": "lancamento", "tab": "lancamento",   "icon": "ring"    } },
+        { "type": "product", "settings": { "name": "Anel Raiz Profunda",    "category": "Anéis",     "price": "R$219", "badge": "none",       "tab": "mais-vendidos","icon": "ring"    } },
+        { "type": "product", "settings": { "name": "Colar Cipó",            "category": "Colares",   "price": "R$259", "badge": "novo",       "tab": "novidades",    "icon": "pendant" } },
+        { "type": "product", "settings": { "name": "Colar Floresta Viva",   "category": "Colares",   "price": "R$299", "badge": "limitado",   "tab": "lancamento",   "icon": "pendant" } },
+        { "type": "product", "settings": { "name": "Colar Raio Verde",      "category": "Colares",   "price": "R$189", "badge": "none",       "tab": "mais-vendidos","icon": "pendant" } },
+        { "type": "product", "settings": { "name": "Brinco Musgo Dourado",  "category": "Brincos",   "price": "R$129", "badge": "lancamento", "tab": "lancamento",   "icon": "drop"    } },
+        { "type": "product", "settings": { "name": "Brinco Gota da Mata",   "category": "Brincos",   "price": "R$159", "badge": "none",       "tab": "mais-vendidos","icon": "drop"    } },
+        { "type": "product", "settings": { "name": "Brinco Folhagem",       "category": "Brincos",   "price": "R$99",  "badge": "none",       "tab": "mais-vendidos","icon": "drop"    } },
+        { "type": "product", "settings": { "name": "Pulseira Bambu",        "category": "Pulseiras", "price": "R$179", "badge": "novo",       "tab": "novidades",    "icon": "oval"    } },
+        { "type": "product", "settings": { "name": "Pulseira Raízes",       "category": "Pulseiras", "price": "R$199", "badge": "limitado",   "tab": "lancamento",   "icon": "oval"    } },
+        { "type": "product", "settings": { "name": "Kit Floresta Completo", "category": "Conjuntos", "price": "R$549", "badge": "lancamento", "tab": "lancamento",   "icon": "cluster" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

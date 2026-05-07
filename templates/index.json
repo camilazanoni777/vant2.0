@@ -21,69 +21,47 @@
     "vant-categories": {
       "type": "vant-categories",
       "blocks": {
-        "ring-block": {
-          "type": "category",
-          "settings": {
-            "name": "Anéis",
-            "phrase": "Cada dedo conta uma história",
-            "count": "12 peças",
-            "link": "/collections/aneis",
-            "icon": "ring"
-          }
-        },
-        "pendant-block": {
-          "type": "category",
-          "settings": {
-            "name": "Colares",
-            "phrase": "Do pescoço ao coração",
-            "count": "18 peças",
-            "link": "/collections/colares",
-            "icon": "pendant"
-          }
-        },
-        "drop-block": {
-          "type": "category",
-          "settings": {
-            "name": "Brincos",
-            "phrase": "O detalhe que transforma",
-            "count": "24 peças",
-            "link": "/collections/brincos",
-            "icon": "drop"
-          }
-        },
-        "oval-block": {
-          "type": "category",
-          "settings": {
-            "name": "Pulseiras",
-            "phrase": "Gestos que brilham",
-            "count": "15 peças",
-            "link": "/collections/pulseiras",
-            "icon": "oval"
-          }
-        },
-        "cluster-block": {
-          "type": "category",
-          "settings": {
-            "name": "Conjuntos",
-            "phrase": "O look completo",
-            "count": "8 peças",
-            "link": "/collections/conjuntos",
-            "icon": "cluster"
-          }
-        }
+        "ring-block":     { "type": "category", "settings": { "name": "Anéis",     "phrase": "Cada dedo conta uma história", "count": "12 peças", "link": "/collections/aneis",     "icon": "ring"    } },
+        "pendant-block":  { "type": "category", "settings": { "name": "Colares",   "phrase": "Do pescoço ao coração",        "count": "18 peças", "link": "/collections/colares",   "icon": "pendant" } },
+        "drop-block":     { "type": "category", "settings": { "name": "Brincos",   "phrase": "O detalhe que transforma",     "count": "24 peças", "link": "/collections/brincos",   "icon": "drop"    } },
+        "oval-block":     { "type": "category", "settings": { "name": "Pulseiras", "phrase": "Gestos que brilham",           "count": "15 peças", "link": "/collections/pulseiras", "icon": "oval"    } },
+        "cluster-block":  { "type": "category", "settings": { "name": "Conjuntos", "phrase": "O look completo",              "count": "8 peças",  "link": "/collections/conjuntos", "icon": "cluster" } }
       },
-      "block_order": [
-        "ring-block",
-        "pendant-block",
-        "drop-block",
-        "oval-block",
-        "cluster-block"
-      ],
+      "block_order": ["ring-block", "pendant-block", "drop-block", "oval-block", "cluster-block"],
       "settings": {
         "label": "COLEÇÕES",
         "title": "Cada peça conta uma história"
       }
+    },
+    "vant-products": {
+      "type": "vant-products",
+      "blocks": {
+        "prod-1":  { "type": "product", "settings": { "name": "Anel Selva Dourada",    "category": "Anéis",     "price": "R$189", "badge": "novo",       "tab": "novidades",    "icon": "ring",    "link": "" } },
+        "prod-2":  { "type": "product", "settings": { "name": "Anel Folha Etérea",     "category": "Anéis",     "price": "R$149", "badge": "lancamento", "tab": "lancamento",   "icon": "ring",    "link": "" } },
+        "prod-3":  { "type": "product", "settings": { "name": "Anel Raiz Profunda",    "category": "Anéis",     "price": "R$219", "badge": "none",       "tab": "mais-vendidos","icon": "ring",    "link": "" } },
+        "prod-4":  { "type": "product", "settings": { "name": "Colar Cipó",            "category": "Colares",   "price": "R$259", "badge": "novo",       "tab": "novidades",    "icon": "pendant", "link": "" } },
+        "prod-5":  { "type": "product", "settings": { "name": "Colar Floresta Viva",   "category": "Colares",   "price": "R$299", "badge": "limitado",   "tab": "lancamento",   "icon": "pendant", "link": "" } },
+        "prod-6":  { "type": "product", "settings": { "name": "Colar Raio Verde",      "category": "Colares",   "price": "R$189", "badge": "none",       "tab": "mais-vendidos","icon": "pendant", "link": "" } },
+        "prod-7":  { "type": "product", "settings": { "name": "Brinco Musgo Dourado",  "category": "Brincos",   "price": "R$129", "badge": "lancamento", "tab": "lancamento",   "icon": "drop",    "link": "" } },
+        "prod-8":  { "type": "product", "settings": { "name": "Brinco Gota da Mata",   "category": "Brincos",   "price": "R$159", "badge": "none",       "tab": "mais-vendidos","icon": "drop",    "link": "" } },
+        "prod-9":  { "type": "product", "settings": { "name": "Brinco Folhagem",       "category": "Brincos",   "price": "R$99",  "badge": "none",       "tab": "mais-vendidos","icon": "drop",    "link": "" } },
+        "prod-10": { "type": "product", "settings": { "name": "Pulseira Bambu",        "category": "Pulseiras", "price": "R$179", "badge": "novo",       "tab": "novidades",    "icon": "oval",    "link": "" } },
+        "prod-11": { "type": "product", "settings": { "name": "Pulseira Raízes",       "category": "Pulseiras", "price": "R$199", "badge": "limitado",   "tab": "lancamento",   "icon": "oval",    "link": "" } },
+        "prod-12": { "type": "product", "settings": { "name": "Kit Floresta Completo", "category": "Conjuntos", "price": "R$549", "badge": "lancamento", "tab": "lancamento",   "icon": "cluster", "link": "" } }
+      },
+      "block_order": [
+        "prod-1","prod-2","prod-3","prod-4","prod-5","prod-6",
+        "prod-7","prod-8","prod-9","prod-10","prod-11","prod-12"
+      ],
+      "settings": {
+        "label": "COLEÇÃO",
+        "title": "Peças que ficam na memória",
+        "tab_all": "Todos",
+        "tab_new": "Novidades",
+        "tab_bestseller": "Mais Vendidos",
+        "tab_launch": "Edição Lançamento"
+      }
     }
   },
-  "order": ["vant-hero", "vant-ticker", "vant-categories"]
+  "order": ["vant-hero", "vant-ticker", "vant-categories", "vant-products"]
 }

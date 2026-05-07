@@ -1,0 +1,14 @@
+*.tmp.*
+*.tmp
+*.tmp[0-9]*
+*.liquid.tmp.*
+**/*.tmp.*
+**/*.tmp
+snippets/*.tmp*
+snippets/*.liquid.tmp*
+**/*.liquid.tmp*
+.git/*
+node_modules/*
+.DS_Store
+Thumbs.db
+desktop.ini

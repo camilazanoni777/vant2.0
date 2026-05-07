@@ -1,0 +1,11 @@
+╭─ error ──────────────────────────────────────────────────────────────────────╮
+│                                                                              │
+│  Error connecting to your store velvet-10319.myshopify.com: GraphQL Error    │
+│  (Code: 401): {"response":{"errors":"[API] Invalid API key or access token   │
+│  (unrecognized login or wrong                                                │
+│  password)","status":401,"headers":{}},"request":{"query":"query             │
+│  publicApiVersions {\n  publicApiVersions {\n    handle\n    supported\n     │
+│   __typename\n  }\n}","variables":{}}} 401 undefined                         │
+│                                                                              │
+╰──────────────────────────────────────────────────────────────────────────────╯
+

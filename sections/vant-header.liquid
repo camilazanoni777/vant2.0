@@ -1,15 +1,19 @@
 <style>
   :root {
-    --vant-deep: #0a110d;
-    --vant-forest: #0f1f15;
-    --vant-moss: #1a3022;
-    --vant-leaf: #2a4f35;
-    --vant-gold: #c9a84c;
+    --vant-deep:       #0a110d;
+    --vant-forest:     #101b14;
+    --vant-moss:       #1a3022;
+    --vant-leaf:       #2a4f35;
+    --vant-gold:       #c9a84c;
     --vant-gold-light: #e8d08a;
-    --vant-cream: #f0e8d5;
-    --vant-text: #e8dfc8;
-    --vant-text-muted: #8fa88a;
-    --vant-border: rgba(201, 168, 76, 0.2);
+    --vant-cream:      #f6eddc;
+    --vant-champagne:  #ead9bd;
+    --vant-rose:       #d9a7a0;
+    --vant-rose-soft:  #f1d8d2;
+    --vant-nude:       #c8a889;
+    --vant-text:       #e8dfc8;
+    --vant-text-muted: #b8a98f;
+    --vant-border:     rgba(201, 168, 76, 0.2);
   }
 
   *,
@@ -76,7 +80,7 @@
     font-weight: 600;
     font-size: 1.6rem;
     color: var(--vant-gold);
-    letter-spacing: 8px;
+    letter-spacing: 6px;
     text-transform: uppercase;
     line-height: 1;
     transition: color 0.3s ease, letter-spacing 0.3s ease;
@@ -84,8 +88,8 @@
   }
 
   .vant-header__logo-text:hover {
-    color: var(--vant-gold-light);
-    letter-spacing: 10px;
+    color: var(--vant-champagne, #ead9bd);
+    letter-spacing: 8px;
   }
 
   /* ── NAV ────────────────────────────────────────────── */
@@ -109,7 +113,7 @@
     font-size: 0.65rem;
     letter-spacing: 2.5px;
     text-transform: uppercase;
-    color: var(--vant-text-muted);
+    color: var(--vant-champagne, #ead9bd);
     text-decoration: none;
     padding: 0.55rem 1rem;
     transition: color 0.3s ease;
@@ -130,7 +134,7 @@
   }
 
   .vant-header__nav-link:hover {
-    color: var(--vant-cream);
+    color: var(--vant-gold-light, #e8d08a);
   }
 
   .vant-header__nav-link:hover::after {
@@ -161,7 +165,7 @@
   }
 
   .vant-header__icon:hover {
-    color: var(--vant-cream);
+    color: var(--vant-champagne, #ead9bd);
   }
 
   .vant-header__icon svg {
@@ -268,9 +272,9 @@
     font-family: 'Jost', sans-serif;
     font-weight: 300;
     font-size: 0.7rem;
-    letter-spacing: 3px;
+    letter-spacing: 2.5px;
     text-transform: uppercase;
-    color: var(--vant-text-muted);
+    color: var(--vant-champagne, #ead9bd);
     text-decoration: none;
     padding: 1rem 0;
     display: block;
@@ -278,7 +282,7 @@
   }
 
   .vant-mobile-nav a:hover {
-    color: var(--vant-cream);
+    color: var(--vant-gold-light, #e8d08a);
     padding-left: 0.5rem;
   }
 

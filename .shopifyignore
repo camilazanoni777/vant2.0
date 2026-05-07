@@ -7,9 +7,8 @@
 snippets/*.tmp*
 snippets/*.liquid.tmp*
 **/*.liquid.tmp*
-.git/
-.git
-node_modules/
+.git/*
+node_modules/*
 .DS_Store
 Thumbs.db
 desktop.ini

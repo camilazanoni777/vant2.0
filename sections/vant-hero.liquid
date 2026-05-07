@@ -1,0 +1,360 @@
+<style>
+  /* ── VANT HERO ──────────────────────────────────────── */
+
+  @keyframes vant-pulse {
+    0%   { transform: translate(-50%, -50%) scale(1);    opacity: 0.35; }
+    50%  { transform: translate(-50%, -50%) scale(1.04); opacity: 0.18; }
+    100% { transform: translate(-50%, -50%) scale(1);    opacity: 0.35; }
+  }
+
+  @keyframes vant-fadeUp {
+    from {
+      opacity: 0;
+      transform: translateY(24px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes vant-float {
+    0%, 100% { transform: translateY(0); }
+    50%       { transform: translateY(-8px); }
+  }
+
+  .vant-hero {
+    position: relative;
+    min-height: 100vh;
+    padding-top: 80px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    background:
+      radial-gradient(circle at 50% 50%, rgba(201, 168, 76, 0.14) 0%, transparent 32%),
+      radial-gradient(circle at 50% 40%, rgba(42, 79, 53, 0.42) 0%, transparent 45%),
+      linear-gradient(180deg, var(--vant-deep, #0a110d) 0%, var(--vant-forest, #0f1f15) 55%, var(--vant-deep, #0a110d) 100%);
+  }
+
+  /* Concentric rings */
+  .vant-hero__ring {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    border: 0.5px solid rgba(201, 168, 76, 0.35);
+    border-radius: 50%;
+    pointer-events: none;
+    animation: vant-pulse 6s ease-in-out infinite;
+  }
+
+  .vant-hero__ring--outer {
+    width: 72vmin;
+    height: 72vmin;
+    animation-delay: 0s;
+  }
+
+  .vant-hero__ring--inner {
+    width: 48vmin;
+    height: 48vmin;
+    border-color: rgba(201, 168, 76, 0.22);
+    animation-delay: -3s;
+  }
+
+  /* Subtle grain texture overlay */
+  .vant-hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+    background-size: 200px 200px;
+    opacity: 0.4;
+    pointer-events: none;
+  }
+
+  /* Content wrapper */
+  .vant-hero__content {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 2rem 2rem 6rem;
+    max-width: 900px;
+    width: 100%;
+  }
+
+  /* Launch label */
+  .vant-hero__launch {
+    display: flex;
+    align-items: center;
+    gap: 1.2rem;
+    margin-bottom: 2.5rem;
+    animation: vant-fadeUp 0.9s ease both;
+    animation-delay: 0.05s;
+  }
+
+  .vant-hero__launch-line {
+    display: block;
+    width: 40px;
+    height: 0.5px;
+    background: linear-gradient(90deg, transparent, var(--vant-gold-light, #e8d08a));
+    flex-shrink: 0;
+  }
+
+  .vant-hero__launch-line--right {
+    background: linear-gradient(90deg, var(--vant-gold-light, #e8d08a), transparent);
+  }
+
+  .vant-hero__launch-text {
+    font-family: 'Jost', sans-serif;
+    font-weight: 400;
+    font-size: 0.6rem;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--vant-gold-light, #e8d08a);
+    white-space: nowrap;
+  }
+
+  /* Main title */
+  .vant-hero__title {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 500;
+    font-size: clamp(72px, 12vw, 140px);
+    letter-spacing: 20px;
+    color: var(--vant-cream, #f0e8d5);
+    line-height: 1;
+    margin: 0 0 1.5rem 0;
+    text-indent: 20px; /* compensate letter-spacing */
+    animation: vant-fadeUp 0.9s ease both;
+    animation-delay: 0.2s;
+  }
+
+  /* Subtitle */
+  .vant-hero__subtitle {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-weight: 400;
+    font-size: clamp(1.1rem, 2.2vw, 1.5rem);
+    letter-spacing: 1px;
+    color: var(--vant-gold-light, #e8d08a);
+    margin: 0 0 1.4rem 0;
+    animation: vant-fadeUp 0.9s ease both;
+    animation-delay: 0.4s;
+  }
+
+  /* Paragraph */
+  .vant-hero__paragraph {
+    font-family: 'Jost', sans-serif;
+    font-weight: 300;
+    font-size: clamp(0.8rem, 1.4vw, 0.95rem);
+    letter-spacing: 0.5px;
+    line-height: 1.85;
+    color: var(--vant-text-muted, #8fa88a);
+    max-width: 480px;
+    margin: 0 0 3rem 0;
+    animation: vant-fadeUp 0.9s ease both;
+    animation-delay: 0.4s;
+  }
+
+  /* CTA button */
+  .vant-hero__btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.8rem;
+    border: 0.5px solid var(--vant-gold, #c9a84c);
+    color: var(--vant-gold, #c9a84c);
+    background: transparent;
+    padding: 1rem 2.4rem;
+    font-family: 'Jost', sans-serif;
+    font-weight: 400;
+    font-size: 0.65rem;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition:
+      background 0.35s ease,
+      color 0.35s ease,
+      letter-spacing 0.35s ease,
+      box-shadow 0.35s ease;
+    cursor: pointer;
+    animation: vant-fadeUp 0.9s ease both;
+    animation-delay: 0.6s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .vant-hero__btn::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--vant-gold, #c9a84c);
+    transform: translateX(-101%);
+    transition: transform 0.35s ease;
+    z-index: 0;
+  }
+
+  .vant-hero__btn span {
+    position: relative;
+    z-index: 1;
+  }
+
+  .vant-hero__btn:hover::before {
+    transform: translateX(0);
+  }
+
+  .vant-hero__btn:hover {
+    color: var(--vant-deep, #0a110d);
+    letter-spacing: 3.5px;
+    box-shadow: 0 4px 30px rgba(201, 168, 76, 0.25);
+  }
+
+  /* Scroll indicator */
+  .vant-hero__scroll {
+    position: absolute;
+    bottom: 2.5rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    animation: vant-float 2.8s ease-in-out infinite;
+    z-index: 2;
+  }
+
+  .vant-hero__scroll-label {
+    font-family: 'Jost', sans-serif;
+    font-size: 0.5rem;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: rgba(201, 168, 76, 0.4);
+  }
+
+  .vant-hero__scroll-track {
+    width: 0.5px;
+    height: 40px;
+    background: linear-gradient(180deg, rgba(201, 168, 76, 0.5), transparent);
+  }
+
+  /* ── RESPONSIVE ─────────────────────────────────────── */
+
+  @media screen and (max-width: 750px) {
+    .vant-hero__title {
+      letter-spacing: 10px;
+      text-indent: 10px;
+    }
+
+    .vant-hero__launch-line {
+      width: 24px;
+    }
+
+    .vant-hero__btn {
+      padding: 0.9rem 2rem;
+    }
+  }
+
+  @media screen and (max-width: 480px) {
+    .vant-hero__title {
+      letter-spacing: 6px;
+      text-indent: 6px;
+    }
+
+    .vant-hero__content {
+      padding: 1.5rem 1.5rem 5rem;
+    }
+  }
+</style>
+
+<section class="vant-hero" aria-label="Hero VANT">
+
+  {%- comment -%} Concentric animated rings {%- endcomment -%}
+  <div class="vant-hero__ring vant-hero__ring--outer" aria-hidden="true"></div>
+  <div class="vant-hero__ring vant-hero__ring--inner" aria-hidden="true"></div>
+
+  {%- comment -%} Main content {%- endcomment -%}
+  <div class="vant-hero__content">
+
+    {%- comment -%} Launch label {%- endcomment -%}
+    <div class="vant-hero__launch" aria-label="{{ section.settings.launch_text }}">
+      <span class="vant-hero__launch-line" aria-hidden="true"></span>
+      <span class="vant-hero__launch-text">{{ section.settings.launch_text }}</span>
+      <span class="vant-hero__launch-line vant-hero__launch-line--right" aria-hidden="true"></span>
+    </div>
+
+    {%- comment -%} Title {%- endcomment -%}
+    <h1 class="vant-hero__title">{{ section.settings.title }}</h1>
+
+    {%- comment -%} Subtitle {%- endcomment -%}
+    <p class="vant-hero__subtitle">{{ section.settings.subtitle }}</p>
+
+    {%- comment -%} Paragraph {%- endcomment -%}
+    <p class="vant-hero__paragraph">{{ section.settings.paragraph }}</p>
+
+    {%- comment -%} CTA button {%- endcomment -%}
+    <a href="{{ section.settings.button_link }}" class="vant-hero__btn">
+      <span>{{ section.settings.button_text }}</span>
+    </a>
+
+  </div>
+
+  {%- comment -%} Scroll indicator {%- endcomment -%}
+  <div class="vant-hero__scroll" aria-hidden="true">
+    <span class="vant-hero__scroll-label">Scroll</span>
+    <div class="vant-hero__scroll-track"></div>
+  </div>
+
+</section>
+
+{% schema %}
+{
+  "name": "VANT Hero",
+  "tag": "div",
+  "class": "vant-hero-section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "launch_text",
+      "label": "Texto de lançamento",
+      "default": "LANÇAMENTO EXCLUSIVO"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Título principal",
+      "default": "VANT"
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Subtítulo",
+      "default": "Nascida para durar. Feita para ser vista."
+    },
+    {
+      "type": "textarea",
+      "id": "paragraph",
+      "label": "Parágrafo",
+      "default": "Semijoias premium criadas para acompanhar sua rotina com presença, brilho e sofisticação atemporal."
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Texto do botão",
+      "default": "Explorar Coleção"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Link do botão",
+      "default": "/collections/all"
+    }
+  ],
+  "presets": [
+    {
+      "name": "VANT Hero"
+    }
+  ]
+}
+{% endschema %}

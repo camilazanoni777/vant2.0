@@ -1,0 +1,16 @@
+{
+  "sections": {
+    "vant-hero": {
+      "type": "vant-hero",
+      "settings": {
+        "launch_text": "LANÇAMENTO EXCLUSIVO",
+        "title": "VANT",
+        "subtitle": "Nascida para durar. Feita para ser vista.",
+        "paragraph": "Semijoias premium criadas para acompanhar sua rotina com presença, brilho e sofisticação atemporal.",
+        "button_text": "Explorar Coleção",
+        "button_link": "/collections/all"
+      }
+    }
+  },
+  "order": ["vant-hero"]
+}

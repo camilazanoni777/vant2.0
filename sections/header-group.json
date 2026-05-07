@@ -1,0 +1,11 @@
+{
+  "name": "VANT Header",
+  "type": "header",
+  "sections": {
+    "vant-header": {
+      "type": "vant-header",
+      "settings": {}
+    }
+  },
+  "order": ["vant-header"]
+}

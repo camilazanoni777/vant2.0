@@ -10,7 +10,80 @@
         "button_text": "Explorar Coleção",
         "button_link": "/collections/all"
       }
+    },
+    "vant-ticker": {
+      "type": "vant-ticker",
+      "settings": {
+        "ticker_text": "LANÇAMENTO OFICIAL · FRETE GRÁTIS ACIMA DE R$199 · PARCELE EM ATÉ 12X · EDIÇÃO DE LANÇAMENTO · PEÇAS LIMITADAS",
+        "speed": 25
+      }
+    },
+    "vant-categories": {
+      "type": "vant-categories",
+      "blocks": {
+        "ring-block": {
+          "type": "category",
+          "settings": {
+            "name": "Anéis",
+            "phrase": "Cada dedo conta uma história",
+            "count": "12 peças",
+            "link": "/collections/aneis",
+            "icon": "ring"
+          }
+        },
+        "pendant-block": {
+          "type": "category",
+          "settings": {
+            "name": "Colares",
+            "phrase": "Do pescoço ao coração",
+            "count": "18 peças",
+            "link": "/collections/colares",
+            "icon": "pendant"
+          }
+        },
+        "drop-block": {
+          "type": "category",
+          "settings": {
+            "name": "Brincos",
+            "phrase": "O detalhe que transforma",
+            "count": "24 peças",
+            "link": "/collections/brincos",
+            "icon": "drop"
+          }
+        },
+        "oval-block": {
+          "type": "category",
+          "settings": {
+            "name": "Pulseiras",
+            "phrase": "Gestos que brilham",
+            "count": "15 peças",
+            "link": "/collections/pulseiras",
+            "icon": "oval"
+          }
+        },
+        "cluster-block": {
+          "type": "category",
+          "settings": {
+            "name": "Conjuntos",
+            "phrase": "O look completo",
+            "count": "8 peças",
+            "link": "/collections/conjuntos",
+            "icon": "cluster"
+          }
+        }
+      },
+      "block_order": [
+        "ring-block",
+        "pendant-block",
+        "drop-block",
+        "oval-block",
+        "cluster-block"
+      ],
+      "settings": {
+        "label": "COLEÇÕES",
+        "title": "Cada peça conta uma história"
+      }
     }
   },
-  "order": ["vant-hero"]
+  "order": ["vant-hero", "vant-ticker", "vant-categories"]
 }

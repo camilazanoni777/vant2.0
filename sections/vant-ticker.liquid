@@ -1,0 +1,141 @@
+<style>
+  /* ── VANT TICKER ────────────────────────────────────── */
+
+  @keyframes vant-ticker-scroll {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-50%); }
+  }
+
+  .vant-ticker {
+    background: var(--vant-forest, #0f1f15);
+    border-top: 0.5px solid var(--vant-border, rgba(201, 168, 76, 0.2));
+    border-bottom: 0.5px solid var(--vant-border, rgba(201, 168, 76, 0.2));
+    height: 46px;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    position: relative;
+  }
+
+  /* Fade masks at edges */
+  .vant-ticker::before,
+  .vant-ticker::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 80px;
+    z-index: 2;
+    pointer-events: none;
+  }
+
+  .vant-ticker::before {
+    left: 0;
+    background: linear-gradient(to right, var(--vant-forest, #0f1f15), transparent);
+  }
+
+  .vant-ticker::after {
+    right: 0;
+    background: linear-gradient(to left, var(--vant-forest, #0f1f15), transparent);
+  }
+
+  .vant-ticker__track {
+    display: flex;
+    align-items: center;
+    white-space: nowrap;
+    /* duration injected inline via Liquid */
+    animation: vant-ticker-scroll linear infinite;
+    will-change: transform;
+  }
+
+  .vant-ticker__segment {
+    display: inline-flex;
+    align-items: center;
+    font-family: 'Jost', sans-serif;
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--vant-gold, #c9a84c);
+    white-space: nowrap;
+    padding-right: 4rem;
+  }
+
+  /* Dot separator between items inside each segment */
+  .vant-ticker__dot {
+    display: inline-block;
+    width: 3px;
+    height: 3px;
+    border-radius: 50%;
+    background: var(--vant-gold, #c9a84c);
+    opacity: 0.5;
+    margin: 0 1.6rem;
+    vertical-align: middle;
+    flex-shrink: 0;
+  }
+</style>
+
+{%- liquid
+  assign speed = section.settings.speed | default: 25
+  assign items = section.settings.ticker_text | split: ' · '
+-%}
+
+<div class="vant-ticker" aria-hidden="true">
+  <div class="vant-ticker__track" style="animation-duration: {{ speed }}s">
+
+    {%- comment -%} Segment 1 — original content {%- endcomment -%}
+    <span class="vant-ticker__segment">
+      {%- for item in items -%}
+        {{- item -}}
+        {%- unless forloop.last -%}
+          <span class="vant-ticker__dot"></span>
+        {%- endunless -%}
+      {%- endfor -%}
+      <span class="vant-ticker__dot"></span>
+    </span>
+
+    {%- comment -%} Segment 2 — duplicate for seamless loop (-50% = 1 segment width) {%- endcomment -%}
+    <span class="vant-ticker__segment">
+      {%- for item in items -%}
+        {{- item -}}
+        {%- unless forloop.last -%}
+          <span class="vant-ticker__dot"></span>
+        {%- endunless -%}
+      {%- endfor -%}
+      <span class="vant-ticker__dot"></span>
+    </span>
+
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "VANT Ticker",
+  "class": "vant-ticker-section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "ticker_text",
+      "label": "Texto do ticker",
+      "info": "Separe os itens com ' · ' (espaço, ponto médio, espaço)",
+      "default": "LANÇAMENTO OFICIAL · FRETE GRÁTIS ACIMA DE R$199 · PARCELE EM ATÉ 12X · EDIÇÃO DE LANÇAMENTO · PEÇAS LIMITADAS"
+    },
+    {
+      "type": "range",
+      "id": "speed",
+      "min": 10,
+      "max": 60,
+      "step": 1,
+      "unit": "s",
+      "label": "Velocidade da animação",
+      "info": "Menor = mais rápido",
+      "default": 25
+    }
+  ],
+  "presets": [
+    {
+      "name": "VANT Ticker"
+    }
+  ]
+}
+{% endschema %}

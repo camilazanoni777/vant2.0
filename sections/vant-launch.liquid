@@ -1,0 +1,438 @@
+<style>
+  /* ── VANT LAUNCH ────────────────────────────────────── */
+
+  @keyframes vant-blink {
+    0%, 100% { opacity: 1; }
+    50%       { opacity: 0.25; }
+  }
+
+  @keyframes vant-launch-fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .vant-launch {
+    background:
+      radial-gradient(circle at 50% 50%, rgba(201, 168, 76, 0.08) 0%, transparent 45%),
+      var(--vant-forest, #0f1f15);
+    padding: 110px 3rem 120px;
+    text-align: center;
+  }
+
+  .vant-launch__inner {
+    max-width: 760px;
+    margin: 0 auto;
+  }
+
+  /* ── BADGE ──────────────────────────────────────────── */
+
+  .vant-launch-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
+    font-family: 'Jost', sans-serif;
+    font-weight: 400;
+    font-size: 0.62rem;
+    letter-spacing: 3.5px;
+    text-transform: uppercase;
+    color: var(--vant-gold, #c9a84c);
+    margin-bottom: 2rem;
+    animation: vant-launch-fadeUp 0.8s ease both;
+  }
+
+  .vant-launch-dot {
+    animation: vant-blink 1.8s ease-in-out infinite;
+    font-size: 0.5rem;
+    line-height: 1;
+  }
+
+  /* ── TITLE ──────────────────────────────────────────── */
+
+  .vant-launch__title {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 400;
+    font-size: clamp(2rem, 4.5vw, 3.5rem);
+    line-height: 1.15;
+    color: var(--vant-cream, #f0e8d5);
+    margin: 0 0 1.6rem 0;
+    animation: vant-launch-fadeUp 0.8s ease 0.15s both;
+  }
+
+  /* ── SUBTITLE ───────────────────────────────────────── */
+
+  .vant-launch__subtitle {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-weight: 400;
+    font-size: clamp(1rem, 1.8vw, 1.25rem);
+    line-height: 1.75;
+    color: var(--vant-text-muted, #8fa88a);
+    max-width: 560px;
+    margin: 0 auto 3.5rem;
+    animation: vant-launch-fadeUp 0.8s ease 0.3s both;
+  }
+
+  /* ── COUNTDOWN ──────────────────────────────────────── */
+
+  .vant-countdown {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 1.5rem;
+    margin-bottom: 3.5rem;
+    animation: vant-launch-fadeUp 0.8s ease 0.45s both;
+  }
+
+  .vant-countdown-block {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.55rem;
+  }
+
+  .vant-countdown-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(40px, 7vw, 64px);
+    font-weight: 400;
+    color: var(--vant-cream, #f0e8d5);
+    line-height: 1;
+    min-width: 2.2ch;
+    text-align: center;
+    letter-spacing: -1px;
+  }
+
+  .vant-countdown-label {
+    font-family: 'Jost', sans-serif;
+    font-weight: 400;
+    font-size: 0.55rem;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--vant-text-muted, #8fa88a);
+  }
+
+  .vant-countdown-sep {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(32px, 5vw, 52px);
+    color: var(--vant-gold, #c9a84c);
+    opacity: 0.45;
+    line-height: 1;
+    margin-top: 0.1rem;
+    user-select: none;
+  }
+
+  /* ── WAITLIST FORM ──────────────────────────────────── */
+
+  .vant-waitlist-wrapper {
+    max-width: 440px;
+    margin: 0 auto;
+    animation: vant-launch-fadeUp 0.8s ease 0.6s both;
+  }
+
+  .vant-waitlist-form {
+    display: flex;
+    border: 0.5px solid var(--vant-border, rgba(201, 168, 76, 0.2));
+    border-radius: 8px;
+    overflow: hidden;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .vant-waitlist-form:focus-within {
+    border-color: rgba(201, 168, 76, 0.45);
+    box-shadow: 0 0 0 3px rgba(201, 168, 76, 0.06);
+  }
+
+  .vant-waitlist-input {
+    flex: 1;
+    background: transparent;
+    border: none;
+    color: var(--vant-text, #e8dfc8);
+    padding: 16px 20px;
+    font-family: 'Jost', sans-serif;
+    font-size: 0.82rem;
+    font-weight: 300;
+    outline: none;
+    min-width: 0;
+  }
+
+  .vant-waitlist-input::placeholder {
+    color: var(--vant-text-muted, #8fa88a);
+  }
+
+  .vant-waitlist-submit {
+    background: var(--vant-gold, #c9a84c);
+    color: var(--vant-deep, #0a110d);
+    border: none;
+    padding: 0 22px;
+    font-family: 'Jost', sans-serif;
+    font-size: 0.58rem;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    cursor: pointer;
+    white-space: nowrap;
+    flex-shrink: 0;
+    transition: background 0.3s ease;
+  }
+
+  .vant-waitlist-submit:hover {
+    background: var(--vant-gold-light, #e8d08a);
+  }
+
+  .vant-waitlist-success {
+    border: 0.5px solid var(--vant-border, rgba(201, 168, 76, 0.2));
+    background: rgba(10, 17, 13, 0.55);
+    border-radius: 8px;
+    padding: 18px 24px;
+    font-family: 'Jost', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 400;
+    letter-spacing: 0.5px;
+    color: var(--vant-gold-light, #e8d08a);
+    margin: 0;
+  }
+
+  .vant-waitlist-note {
+    margin-top: 0.9rem;
+    font-family: 'Jost', sans-serif;
+    font-size: 0.58rem;
+    color: var(--vant-text-muted, #8fa88a);
+    opacity: 0.65;
+    letter-spacing: 0.3px;
+  }
+
+  /* ── RESPONSIVE ─────────────────────────────────────── */
+
+  @media screen and (max-width: 989px) {
+    .vant-launch {
+      padding: 80px 2rem 90px;
+    }
+
+    .vant-countdown {
+      gap: 1rem;
+    }
+  }
+
+  @media screen and (max-width: 600px) {
+    .vant-launch {
+      padding: 64px 1.4rem 72px;
+    }
+
+    .vant-countdown {
+      gap: 0.75rem;
+    }
+
+    .vant-waitlist-form {
+      flex-direction: column;
+      border-radius: 10px;
+    }
+
+    .vant-waitlist-input {
+      border-bottom: 0.5px solid var(--vant-border, rgba(201, 168, 76, 0.2));
+      padding: 14px 16px;
+      text-align: center;
+    }
+
+    .vant-waitlist-submit {
+      padding: 14px 16px;
+    }
+  }
+</style>
+
+<section class="vant-launch" aria-labelledby="vant-launch-title">
+  <div class="vant-launch__inner">
+
+    {%- comment -%} Badge animado {%- endcomment -%}
+    <p class="vant-launch-badge" aria-label="{{ section.settings.badge }}">
+      <span class="vant-launch-dot" aria-hidden="true">●</span>
+      {{ section.settings.badge }}
+    </p>
+
+    {%- comment -%} Título {%- endcomment -%}
+    <h2 class="vant-launch__title" id="vant-launch-title">
+      {{ section.settings.title }}
+    </h2>
+
+    {%- comment -%} Subtítulo {%- endcomment -%}
+    <p class="vant-launch__subtitle">{{ section.settings.subtitle }}</p>
+
+    {%- comment -%} Contador regressivo {%- endcomment -%}
+    <div class="vant-countdown" role="timer" aria-live="polite" aria-label="Contagem regressiva">
+      <div class="vant-countdown-block">
+        <span class="vant-countdown-num" id="vant-cd-days-{{ section.id }}">30</span>
+        <span class="vant-countdown-label">Dias</span>
+      </div>
+      <span class="vant-countdown-sep" aria-hidden="true">:</span>
+      <div class="vant-countdown-block">
+        <span class="vant-countdown-num" id="vant-cd-hours-{{ section.id }}">00</span>
+        <span class="vant-countdown-label">Horas</span>
+      </div>
+      <span class="vant-countdown-sep" aria-hidden="true">:</span>
+      <div class="vant-countdown-block">
+        <span class="vant-countdown-num" id="vant-cd-mins-{{ section.id }}">00</span>
+        <span class="vant-countdown-label">Minutos</span>
+      </div>
+      <span class="vant-countdown-sep" aria-hidden="true">:</span>
+      <div class="vant-countdown-block">
+        <span class="vant-countdown-num" id="vant-cd-secs-{{ section.id }}">00</span>
+        <span class="vant-countdown-label">Segundos</span>
+      </div>
+    </div>
+
+    {%- comment -%} Formulário lista de espera {%- endcomment -%}
+    <div class="vant-waitlist-wrapper" id="vant-waitlist-wrapper-{{ section.id }}">
+      <form class="vant-waitlist-form" id="vant-waitlist-{{ section.id }}" novalidate>
+        <input
+          class="vant-waitlist-input"
+          type="email"
+          placeholder="{{ section.settings.input_placeholder }}"
+          aria-label="{{ section.settings.input_placeholder }}"
+          required
+        >
+        <button class="vant-waitlist-submit" type="submit">
+          {{ section.settings.button_text }}
+        </button>
+      </form>
+      <p class="vant-waitlist-note" aria-hidden="true">{{ section.settings.privacy_note }}</p>
+    </div>
+
+  </div>
+</section>
+
+<script>
+(function () {
+  'use strict';
+
+  /* ── Countdown ──────────────────────────────────────── */
+  var sid        = '{{ section.id }}';
+  var daysEl     = document.getElementById('vant-cd-days-'  + sid);
+  var hoursEl    = document.getElementById('vant-cd-hours-' + sid);
+  var minsEl     = document.getElementById('vant-cd-mins-'  + sid);
+  var secsEl     = document.getElementById('vant-cd-secs-'  + sid);
+
+  if (daysEl && hoursEl && minsEl && secsEl) {
+    var target = new Date();
+    target.setDate(target.getDate() + 30);
+
+    function pad(n) { return String(Math.max(0, n)).padStart(2, '0'); }
+
+    function tick() {
+      var diff = target - Date.now();
+      if (diff <= 0) {
+        daysEl.textContent  = '00';
+        hoursEl.textContent = '00';
+        minsEl.textContent  = '00';
+        secsEl.textContent  = '00';
+        return;
+      }
+      var d = Math.floor(diff / 86400000);
+      var h = Math.floor((diff % 86400000) / 3600000);
+      var m = Math.floor((diff % 3600000)  / 60000);
+      var s = Math.floor((diff % 60000)    / 1000);
+
+      daysEl.textContent  = pad(d);
+      hoursEl.textContent = pad(h);
+      minsEl.textContent  = pad(m);
+      secsEl.textContent  = pad(s);
+    }
+
+    tick();
+    setInterval(tick, 1000);
+  }
+
+  /* ── Waitlist form ──────────────────────────────────── */
+  var wrapper = document.getElementById('vant-waitlist-wrapper-' + sid);
+  var form    = document.getElementById('vant-waitlist-' + sid);
+
+  if (form && wrapper) {
+    var successMsg = {{ section.settings.success_message | json }};
+
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var email = form.querySelector('[type="email"]').value.trim();
+      if (!email) return;
+
+      /* Replace form with success state */
+      form.style.opacity = '0';
+      form.style.transform = 'translateY(-4px)';
+      form.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
+
+      setTimeout(function () {
+        var note = wrapper.querySelector('.vant-waitlist-note');
+        form.remove();
+        var p = document.createElement('p');
+        p.className = 'vant-waitlist-success';
+        p.textContent = successMsg;
+        p.style.opacity = '0';
+        p.style.transform = 'translateY(6px)';
+        p.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
+        wrapper.insertBefore(p, note);
+        setTimeout(function () {
+          p.style.opacity = '1';
+          p.style.transform = 'translateY(0)';
+        }, 20);
+      }, 280);
+    });
+  }
+
+})();
+</script>
+
+{% schema %}
+{
+  "name": "VANT Lançamento",
+  "class": "vant-launch-section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "badge",
+      "label": "Badge",
+      "default": "LANÇAMENTO OFICIAL"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Título",
+      "default": "Uma nova era começa agora"
+    },
+    {
+      "type": "textarea",
+      "id": "subtitle",
+      "label": "Subtítulo",
+      "default": "A VANT nasce para transformar semijoias em presença: peças feitas para acompanhar sua rotina, marcar sua estética e atravessar o tempo com brilho próprio."
+    },
+    {
+      "type": "header",
+      "content": "Formulário de lista de espera"
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Texto do botão",
+      "default": "Entrar na Lista"
+    },
+    {
+      "type": "text",
+      "id": "input_placeholder",
+      "label": "Placeholder do input",
+      "default": "Seu melhor e-mail"
+    },
+    {
+      "type": "text",
+      "id": "success_message",
+      "label": "Mensagem de sucesso",
+      "default": "✓ Você está na lista. Em breve, novidades exclusivas."
+    },
+    {
+      "type": "text",
+      "id": "privacy_note",
+      "label": "Nota de privacidade",
+      "default": "Sem spam. Apenas novidades exclusivas da VANT."
+    }
+  ],
+  "presets": [
+    {
+      "name": "VANT Lançamento"
+    }
+  ]
+}
+{% endschema %}

@@ -3,13 +3,14 @@
 
   .vant-products {
     background:
-      radial-gradient(ellipse at 50% 100%, rgba(217, 167, 160, 0.05) 0%, transparent 55%),
+      radial-gradient(ellipse at 50% 100%, rgba(217, 167, 160, 0.06) 0%, transparent 54%),
+      radial-gradient(circle at top right, rgba(232, 208, 138, 0.04), transparent 30%),
       linear-gradient(180deg,
         var(--vant-deep,   #101711) 0%,
         var(--vant-forest, #162319) 48%,
         var(--vant-deep,   #101711) 100%
       );
-    padding: 96px 5vw 112px;
+    padding: 88px 5vw 96px;
   }
 
   .vant-products__inner {
@@ -20,7 +21,7 @@
   /* ── SECTION HEADER ─────────────────────────────────── */
 
   .vant-products__header {
-    margin-bottom: 48px;
+    margin-bottom: 34px;
   }
 
   .vant-products__label {
@@ -29,10 +30,10 @@
     gap: 1rem;
     font-family: 'Jost', sans-serif;
     font-weight: 400;
-    font-size: 0.6rem;
-    letter-spacing: 4px;
+    font-size: 11.5px;
+    letter-spacing: 2.2px;
     text-transform: uppercase;
-    color: var(--vant-gold, #c9a84c);
+    color: var(--vant-gold-light, #e8d08a);
     margin-bottom: 1.2rem;
   }
 
@@ -47,8 +48,8 @@
   .vant-products__title {
     font-family: 'Cormorant Garamond', serif;
     font-weight: 400;
-    font-size: clamp(1.9rem, 3.5vw, 3rem);
-    line-height: 1.2;
+    font-size: clamp(36px, 4.5vw, 58px);
+    line-height: 1.05;
     color: var(--vant-cream, #f0e8d5);
     margin: 0;
     max-width: 480px;
@@ -59,9 +60,9 @@
   .vant-products__filters {
     display: flex;
     align-items: flex-end;
-    gap: 0;
-    margin-bottom: 52px;
-    border-bottom: 0.5px solid var(--vant-border, rgba(201, 168, 76, 0.2));
+    gap: 24px;
+    margin-bottom: 34px;
+    border-bottom: 1px solid rgba(232, 208, 138, 0.18);
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
     scrollbar-width: none;
@@ -72,15 +73,15 @@
   .vant-filter-btn {
     background: transparent;
     border: none;
-    border-bottom: 1.5px solid transparent;
+    border-bottom: 1px solid transparent;
     color: var(--vant-text-muted, #8fa88a);
     text-transform: uppercase;
-    font-size: 0.63rem;
-    letter-spacing: 2px;
+    font-size: 11.5px;
+    letter-spacing: 1.8px;
     font-family: 'Jost', sans-serif;
     font-weight: 400;
     cursor: pointer;
-    padding: 0.5rem 1.1rem 0.85rem;
+    padding: 0 0 12px;
     white-space: nowrap;
     flex-shrink: 0;
     transition: color 0.3s ease, border-color 0.3s ease;
@@ -88,28 +89,104 @@
   }
 
   .vant-filter-btn.active {
-    color: var(--vant-gold, #c9a84c);
-    border-bottom-color: var(--vant-gold, #c9a84c);
+    color: var(--vant-gold-light, #e8d08a);
+    border-bottom-color: var(--vant-gold-light, #e8d08a);
   }
 
   .vant-filter-btn:hover:not(.active) {
-    color: var(--vant-cream, #f0e8d5);
+    color: var(--vant-champagne, #d8c89f);
   }
 
-  /* ── GRID ───────────────────────────────────────────── */
-
-  .vant-products__grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 26px;
+  .vant-products__drag-hint {
+    display: flex;
+    justify-content: flex-end;
+    margin: -22px 4px 18px;
+    font-family: 'Jost', sans-serif;
+    font-size: 12px;
+    letter-spacing: 1px;
+    text-transform: lowercase;
+    color: var(--vant-text-muted, #8fa88a);
+    opacity: 0.75;
   }
+
+  /* ── CAROUSEL ───────────────────────────────────────── */
+
+  .vant-products-carousel-wrapper {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+  }
+
+  .vant-products-carousel {
+    display: flex;
+    gap: 22px;
+    overflow-x: auto;
+    overflow-y: visible;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    padding: 8px 4px 26px;
+    scroll-padding-left: 4px;
+    cursor: grab;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    user-select: none;
+  }
+
+  .vant-products-carousel::-webkit-scrollbar {
+    display: none;
+  }
+
+  .vant-products-carousel.is-dragging {
+    cursor: grabbing;
+    scroll-behavior: auto;
+  }
+
+  .vant-carousel-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 40px;
+    height: 40px;
+    border-radius: 999px;
+    background: rgba(16, 23, 17, 0.78);
+    border: 1px solid rgba(232, 208, 138, 0.24);
+    color: var(--vant-champagne, #d8c89f);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 3;
+    backdrop-filter: blur(10px);
+    transition: background 0.28s ease, color 0.28s ease, box-shadow 0.28s ease, border-color 0.28s ease;
+  }
+
+  .vant-carousel-arrow:hover {
+    background: var(--vant-gold-light, #e8d08a);
+    color: var(--vant-deep, #101711);
+    border-color: rgba(232, 208, 138, 0.5);
+    box-shadow: 0 0 24px rgba(232, 208, 138, 0.16);
+  }
+
+  .vant-carousel-arrow svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  .vant-carousel-prev { left: 4px; }
+  .vant-carousel-next { right: 4px; }
 
   /* ── CARD ───────────────────────────────────────────── */
 
   .vant-product-card {
-    background: linear-gradient(155deg, var(--vant-forest, #162319) 0%, #1b1e1c 100%);
-    border: 0.5px solid var(--vant-border, rgba(201, 168, 76, 0.24));
-    border-radius: 30px;
+    flex: 0 0 calc((100% - 84px) / 4);
+    max-width: 360px;
+    scroll-snap-align: start;
+    background:
+      radial-gradient(circle at top center, rgba(217, 167, 160, 0.08), transparent 38%),
+      linear-gradient(180deg, rgba(33, 53, 40, 0.96), rgba(16, 23, 17, 0.98));
+    border: 1px solid rgba(232, 208, 138, 0.18);
+    border-radius: 26px;
     overflow: hidden;
     position: relative;
     cursor: pointer;
@@ -117,10 +194,11 @@
     opacity: 1;
     transform: translateY(0);
     transition:
-      opacity  0.65s ease,
-      transform 0.65s ease,
-      border-color 0.4s ease,
-      box-shadow 0.4s ease;
+      opacity 0.45s ease,
+      transform 0.35s ease,
+      border-color 0.35s ease,
+      box-shadow 0.35s ease;
+    box-shadow: 0 16px 44px rgba(0, 0, 0, 0.14);
   }
 
   .vant-product-card.is-visible {
@@ -128,19 +206,25 @@
     transform: translateY(0);
   }
 
+  .vant-product-card.is-hidden {
+    display: none;
+  }
+
   .vant-product-card.is-visible:hover {
-    border-color: rgba(201, 168, 76, 0.45);
-    transform: translateY(-5px);
-    box-shadow:
-      0 28px 72px rgba(0, 0, 0, 0.48),
-      0 0 0 0.5px rgba(201, 168, 76, 0.18);
+    border-color: rgba(232, 208, 138, 0.36);
+    transform: translateY(-4px);
+    box-shadow: 0 22px 60px rgba(0, 0, 0, 0.20);
   }
 
   /* ── IMAGE AREA ─────────────────────────────────────── */
 
   .vant-product-image {
-    aspect-ratio: 1 / 1;
-    background: linear-gradient(145deg, #1a2e22, #22201f);
+    aspect-ratio: 1 / 0.88;
+    min-height: 260px;
+    background:
+      radial-gradient(circle at center, rgba(232, 208, 138, 0.08), transparent 40%),
+      radial-gradient(circle at 50% 35%, rgba(217, 167, 160, 0.08), transparent 34%),
+      var(--vant-moss, #1a3022);
     position: relative;
     display: flex;
     align-items: center;
@@ -156,43 +240,45 @@
     left: 14px;
     z-index: 3;
     font-family: 'Jost', sans-serif;
-    font-size: 11px;
+    font-size: 10px;
     font-weight: 500;
-    letter-spacing: 1.6px;
+    letter-spacing: 1.5px;
     text-transform: uppercase;
     border-radius: 999px;
-    padding: 4px 11px 3px;
+    padding: 5px 11px;
     line-height: 1;
     pointer-events: none;
   }
 
   .vant-badge--novo {
-    background: var(--vant-gold, #c9a84c);
-    color: var(--vant-deep, #0a110d);
+    background: var(--vant-gold-light, #e8d08a);
+    color: var(--vant-deep, #101711);
   }
 
   .vant-badge--lancamento {
-    background: transparent;
-    border: 0.5px solid var(--vant-gold, #c9a84c);
-    color: var(--vant-gold, #c9a84c);
+    background: rgba(16, 23, 17, 0.32);
+    border: 1px solid rgba(232, 208, 138, 0.60);
+    color: var(--vant-gold-light, #e8d08a);
   }
 
   .vant-badge--limitado {
-    background: rgba(10, 17, 13, 0.72);
-    border: 0.5px solid rgba(201, 168, 76, 0.35);
-    color: var(--vant-gold, #c9a84c);
+    background: rgba(16, 23, 17, 0.55);
+    border: 1px solid rgba(232, 208, 138, 0.32);
+    color: var(--vant-champagne, #d8c89f);
   }
 
   /* ── SVG ICON ───────────────────────────────────────── */
 
   .vant-product-icon {
-    width: 46%;
-    height: 46%;
+    width: 36%;
+    max-width: 130px;
+    height: auto;
     display: flex;
     align-items: center;
     justify-content: center;
-    opacity: 0.22;
-    transition: opacity 0.4s ease, transform 0.5s ease;
+    opacity: 0.20;
+    transform: scale(0.76);
+    transition: opacity 0.35s ease, transform 0.35s ease;
     pointer-events: none;
   }
 
@@ -201,9 +287,13 @@
     height: 100%;
   }
 
+  .vant-product-icon svg [stroke] {
+    stroke: var(--vant-gold-light, #e8d08a);
+  }
+
   .vant-product-card.is-visible:hover .vant-product-icon {
-    opacity: 0.38;
-    transform: scale(1.06);
+    opacity: 0.32;
+    transform: scale(0.82);
   }
 
   /* ── WISHLIST BUTTON ────────────────────────────────── */
@@ -213,10 +303,10 @@
     top: 14px;
     right: 14px;
     z-index: 3;
-    width: 34px;
-    height: 34px;
-    background: rgba(10, 17, 13, 0.7);
-    border: 0.5px solid var(--vant-border, rgba(201, 168, 76, 0.2));
+    width: 36px;
+    height: 36px;
+    background: rgba(16, 23, 17, 0.55);
+    border: 1px solid rgba(232, 208, 138, 0.24);
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -229,7 +319,7 @@
       transform 0.3s ease,
       background 0.3s ease,
       border-color 0.3s ease;
-    color: var(--vant-text-muted, #8fa88a);
+    color: var(--vant-champagne, #d8c89f);
   }
 
   .vant-wishlist-btn svg {
@@ -241,6 +331,11 @@
   .vant-product-card.is-visible:hover .vant-wishlist-btn {
     opacity: 1;
     transform: translateY(0) scale(1);
+  }
+
+  .vant-wishlist-btn:hover {
+    background: rgba(232, 208, 138, 0.12);
+    color: var(--vant-gold-light, #e8d08a);
   }
 
   .vant-wishlist-btn.is-active {
@@ -258,27 +353,27 @@
   /* ── PRODUCT INFO ───────────────────────────────────── */
 
   .vant-product-info {
-    padding: 18px 20px 22px;
+    padding: 18px 20px 20px;
   }
 
   .vant-product-category {
     display: block;
     font-family: 'Jost', sans-serif;
     font-weight: 400;
-    font-size: 0.58rem;
-    letter-spacing: 2.5px;
+    font-size: 11px;
+    letter-spacing: 1.8px;
     text-transform: uppercase;
-    color: var(--vant-text-muted, #8fa88a);
-    margin-bottom: 0.45rem;
+    color: var(--vant-nude, #cbbca2);
+    margin-bottom: 6px;
   }
 
   .vant-product-name {
     font-family: 'Cormorant Garamond', serif;
     font-weight: 500;
-    font-size: 1.375rem;
+    font-size: 21px;
     color: var(--vant-cream, #fbf4e6);
-    line-height: 1.3;
-    margin: 0 0 0.65rem 0;
+    line-height: 1.12;
+    margin: 0 0 8px 0;
     transition: color 0.3s ease;
   }
 
@@ -286,11 +381,16 @@
     color: #fff;
   }
 
+  .vant-product-card h3 {
+    font-size: 21px;
+    line-height: 1.12;
+  }
+
   .vant-product-price {
     font-family: 'Jost', sans-serif;
     font-weight: 500;
-    font-size: 1rem;
-    color: var(--vant-gold, #c9a84c);
+    font-size: 15px;
+    color: var(--vant-gold-light, #e8d08a);
     margin: 0;
     letter-spacing: 0.3px;
   }
@@ -302,28 +402,66 @@
 
   /* ── RESPONSIVE ─────────────────────────────────────── */
 
-  @media screen and (max-width: 989px) {
+  @media screen and (max-width: 1280px) {
+    .vant-product-card {
+      flex: 0 0 calc((100% - 56px) / 3);
+    }
+  }
+
+  @media screen and (max-width: 990px) {
     .vant-products {
       padding: 72px 3vw 80px;
     }
 
-    .vant-products__grid {
-      grid-template-columns: repeat(2, 1fr);
-      gap: 18px;
+    .vant-product-card {
+      flex: 0 0 calc((100% - 28px) / 2);
     }
 
     .vant-products__header { margin-bottom: 40px; }
     .vant-products__filters { margin-bottom: 36px; }
   }
 
-  @media screen and (max-width: 600px) {
+  @media screen and (max-width: 768px) {
+    .vant-products {
+      padding: 64px 22px;
+    }
+
+    .vant-product-card {
+      flex: 0 0 82%;
+      max-width: none;
+      border-radius: 24px;
+    }
+
+    .vant-product-image {
+      min-height: 230px;
+      aspect-ratio: 1 / 0.9;
+    }
+
+    .vant-product-info {
+      padding: 16px 18px 18px;
+    }
+
+    .vant-product-card h3,
+    .vant-product-name {
+      font-size: 20px;
+    }
+
+    .vant-carousel-arrow {
+      display: none;
+    }
+
+    .vant-products__drag-hint {
+      display: none;
+    }
+  }
+
+  @media screen and (max-width: 480px) {
     .vant-products {
       padding: 64px 22px 72px;
     }
 
-    .vant-products__grid {
-      grid-template-columns: 1fr;
-      gap: 14px;
+    .vant-product-card {
+      flex: 0 0 88%;
     }
 
     .vant-products__title {
@@ -369,8 +507,17 @@
       </button>
     </div>
 
-    {%- comment -%} Product grid {%- endcomment -%}
-    <div class="vant-products__grid" id="vant-grid-{{ section.id }}">
+    <p class="vant-products__drag-hint">Arraste para ver mais →</p>
+
+    {%- comment -%} Product carousel {%- endcomment -%}
+    <div class="vant-products-carousel-wrapper">
+      <button class="vant-carousel-arrow vant-carousel-prev" type="button" aria-label="Produtos anteriores">
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+          <path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+
+      <div class="vant-products-carousel" id="vant-carousel-{{ section.id }}" aria-label="Produtos VANT">
 
       {%- for block in section.blocks -%}
 
@@ -480,6 +627,13 @@
 
       {%- endfor -%}
 
+      </div>
+
+      <button class="vant-carousel-arrow vant-carousel-next" type="button" aria-label="Próximos produtos">
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+          <path d="M9 6L15 12L9 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
     </div>
   </div>
 </section>
@@ -488,138 +642,197 @@
 (function () {
   'use strict';
 
-  /* ── Scope to this section instance ───────────────── */
-  var sectionEl = document.getElementById('shopify-section-{{ section.id }}');
-  if (!sectionEl) return;
+  function initVantProductsCarousel(root) {
+    var scope = root && root.querySelector ? root : document;
+    var sections = [];
 
-  var filterBtns = sectionEl.querySelectorAll('.vant-filter-btn');
-  var cards      = sectionEl.querySelectorAll('.vant-product-card');
+    if (scope.classList && scope.classList.contains('vant-products-section')) {
+      sections.push(scope);
+    }
 
-  cards.forEach(function (card) {
-    card.classList.add('is-visible');
-  });
-
-  /* ── FILTER ─────────────────────────────────────────── */
-  function filterProducts(filter) {
-    /* 1 — fade everything out */
-    cards.forEach(function (card) {
-      if (card.style.display === 'none') return;
-      card.style.opacity    = '0';
-      card.style.transform  = 'translateY(8px)';
+    scope.querySelectorAll('.vant-products-section').forEach(function (sectionEl) {
+      sections.push(sectionEl);
     });
 
-    setTimeout(function () {
-      /* 2 — show / hide */
+    sections.forEach(initSection);
+  }
+
+  function initSection(sectionEl) {
+    if (!sectionEl || sectionEl.dataset.vantCarouselReady === 'true') return;
+
+    var carousel = sectionEl.querySelector('.vant-products-carousel');
+    var filterBtns = sectionEl.querySelectorAll('.vant-filter-btn');
+    var prevBtn = sectionEl.querySelector('.vant-carousel-prev');
+    var nextBtn = sectionEl.querySelector('.vant-carousel-next');
+    var cards = sectionEl.querySelectorAll('.vant-product-card');
+
+    if (!carousel || !cards.length) return;
+
+    sectionEl.dataset.vantCarouselReady = 'true';
+
+    cards.forEach(function (card, index) {
+      var delay = (index % 3) * 80;
+      card.dataset.revealDelay = String(delay);
+      card.style.opacity = '0';
+      card.style.transform = 'translateY(18px)';
+      setTimeout(function () {
+        card.classList.add('is-visible');
+        card.style.opacity = '';
+        card.style.transform = '';
+      }, 70 + delay);
+    });
+
+    function visibleCards() {
+      return Array.prototype.filter.call(cards, function (card) {
+        return !card.classList.contains('is-hidden');
+      });
+    }
+
+    function cardStep() {
+      var card = visibleCards()[0] || cards[0];
+      if (!card) return 320;
+      var gap = parseFloat(window.getComputedStyle(carousel).columnGap || window.getComputedStyle(carousel).gap) || 28;
+      return card.getBoundingClientRect().width + gap;
+    }
+
+    function scrollCarousel(direction) {
+      carousel.scrollBy({
+        left: cardStep() * direction,
+        behavior: 'smooth'
+      });
+    }
+
+    if (prevBtn) {
+      prevBtn.addEventListener('click', function () {
+        scrollCarousel(-1);
+      });
+    }
+
+    if (nextBtn) {
+      nextBtn.addEventListener('click', function () {
+        scrollCarousel(1);
+      });
+    }
+
+    function filterProducts(filter) {
       cards.forEach(function (card) {
-        var matches = (filter === 'todos') || (card.dataset.tab === filter);
+        var matches = filter === 'todos' || card.dataset.tab === filter;
+        card.classList.toggle('is-hidden', !matches);
         if (matches) {
-          card.style.display = '';
           card.classList.add('is-visible');
-        } else {
-          card.style.display = 'none';
         }
       });
 
-      /* 3 — fade visible cards back in */
-      setTimeout(function () {
-        cards.forEach(function (card) {
-          if (card.style.display !== 'none') {
-            card.style.opacity   = '';
-            card.style.transform = '';
-          }
-        });
-      }, 30);
-
-    }, 220);
-  }
-
-  filterBtns.forEach(function (btn) {
-    btn.addEventListener('click', function () {
-      filterBtns.forEach(function (b) {
-        b.classList.remove('active');
-        b.setAttribute('aria-pressed', 'false');
+      carousel.scrollTo({
+        left: 0,
+        behavior: 'smooth'
       });
-      btn.classList.add('active');
-      btn.setAttribute('aria-pressed', 'true');
-      filterProducts(btn.dataset.filter);
-    });
-  });
-
-  /* ── CARD CLICK → openCheckout ───────────────────── */
-  cards.forEach(function (card) {
-    /* Keyboard support */
-    card.addEventListener('keydown', function (e) {
-      if (e.key === 'Enter' || e.key === ' ') {
-        e.preventDefault();
-        triggerCard(card);
-      }
-    });
-
-    card.addEventListener('click', function (e) {
-      if (e.target.closest('.vant-wishlist-btn')) return;
-      triggerCard(card);
-    });
-  });
-
-  function triggerCard(card) {
-    var name  = card.dataset.name  || '';
-    var price = card.dataset.price || '';
-    if (typeof window.openCheckout === 'function') {
-      window.openCheckout(name, price);
     }
-  }
 
-  /* ── WISHLIST TOGGLE ─────────────────────────────── */
-  sectionEl.querySelectorAll('.vant-wishlist-btn').forEach(function (btn) {
-    btn.addEventListener('click', function (e) {
-      e.stopPropagation();
-      var isNowActive = !btn.classList.contains('is-active');
-      btn.classList.toggle('is-active', isNowActive);
-      btn.setAttribute('aria-label',
-        isNowActive ? 'Remover dos favoritos' : 'Adicionar aos favoritos'
-      );
-    });
-  });
+    filterBtns.forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        filterBtns.forEach(function (filterBtn) {
+          filterBtn.classList.remove('active');
+          filterBtn.setAttribute('aria-pressed', 'false');
+        });
 
-  /* ── INTERSECTION OBSERVER — fade-up on scroll ───── */
-  function revealCard(card, delay) {
-    setTimeout(function () {
-      card.classList.add('is-visible');
-    }, delay || 0);
-  }
-
-  if ('IntersectionObserver' in window) {
-    var observer = new IntersectionObserver(function (entries) {
-      entries.forEach(function (entry) {
-        if (!entry.isIntersecting) return;
-        var card  = entry.target;
-        var delay = parseInt(card.dataset.revealDelay, 10) || 0;
-        revealCard(card, delay);
-        observer.unobserve(card);
+        btn.classList.add('active');
+        btn.setAttribute('aria-pressed', 'true');
+        filterProducts(btn.dataset.filter || 'todos');
       });
-    }, { threshold: 0.08, rootMargin: '0px 0px -32px 0px' });
+    });
 
-    cards.forEach(function (card, i) {
-      /* stagger by column position (0, 1, 2) */
-      card.dataset.revealDelay = (i % 3) * 85;
-      observer.observe(card);
+    var isDown = false;
+    var startX = 0;
+    var startScrollLeft = 0;
+    var moved = false;
+
+    carousel.addEventListener('mousedown', function (event) {
+      if (event.button !== 0) return;
+      isDown = true;
+      moved = false;
+      startX = event.pageX;
+      startScrollLeft = carousel.scrollLeft;
+      carousel.classList.add('is-dragging');
+    });
+
+    carousel.addEventListener('mousemove', function (event) {
+      if (!isDown) return;
+      var delta = event.pageX - startX;
+      if (Math.abs(delta) > 4) {
+        moved = true;
+      }
+      carousel.scrollLeft = startScrollLeft - delta;
+      event.preventDefault();
+    });
+
+    function endDrag() {
+      isDown = false;
+      carousel.classList.remove('is-dragging');
+    }
+
+    carousel.addEventListener('mouseup', endDrag);
+    carousel.addEventListener('mouseleave', endDrag);
+
+    carousel.addEventListener('click', function (event) {
+      if (!moved) return;
+      event.preventDefault();
+      event.stopPropagation();
+      moved = false;
+    }, true);
+
+    cards.forEach(function (card) {
+      card.addEventListener('keydown', function (event) {
+        if (event.key === 'Enter' || event.key === ' ') {
+          event.preventDefault();
+          triggerCard(card);
+        }
+      });
+
+      card.addEventListener('click', function (event) {
+        if (event.target.closest('.vant-wishlist-btn')) return;
+        triggerCard(card);
+      });
+    });
+
+    function triggerCard(card) {
+      var name = card.dataset.name || '';
+      var price = card.dataset.price || '';
+      if (typeof window.openCheckout === 'function') {
+        window.openCheckout(name, price);
+      }
+    }
+
+    sectionEl.querySelectorAll('.vant-wishlist-btn').forEach(function (btn) {
+      btn.addEventListener('click', function (event) {
+        event.stopPropagation();
+        var isNowActive = !btn.classList.contains('is-active');
+        btn.classList.toggle('is-active', isNowActive);
+        btn.setAttribute(
+          'aria-label',
+          isNowActive ? 'Remover dos favoritos' : 'Adicionar aos favoritos'
+        );
+      });
+    });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', function () {
+      initVantProductsCarousel(document);
     });
   } else {
-    /* Fallback for browsers without IntersectionObserver */
-    cards.forEach(function (card) { card.classList.add('is-visible'); });
+    initVantProductsCarousel(document);
   }
 
+  document.addEventListener('shopify:section:load', function (event) {
+    initVantProductsCarousel(event.target);
+  });
 })();
 
-/* ── GLOBAL: openCheckout placeholder ─────────────────
-   Will be replaced/extended in the checkout modal prompt.
-   Cart badge increments visually with a spring animation.
-──────────────────────────────────────────────────────── */
 if (!window.openCheckout) {
   window.openCheckout = function (nomeProduto, preco) {
     console.log('[VANT] Produto selecionado:', nomeProduto, preco);
 
-    /* Visual cart badge increment */
     var badge = document.querySelector('.vant-cart-badge');
     if (badge) {
       var current = parseInt(badge.textContent, 10) || 0;
@@ -760,7 +973,10 @@ if (!window.openCheckout) {
         { "type": "product", "settings": { "name": "Brinco Folhagem",       "category": "Brincos",   "price": "R$99",  "badge": "none",       "tab": "mais-vendidos","icon": "drop"    } },
         { "type": "product", "settings": { "name": "Pulseira Bambu",        "category": "Pulseiras", "price": "R$179", "badge": "novo",       "tab": "novidades",    "icon": "oval"    } },
         { "type": "product", "settings": { "name": "Pulseira Raízes",       "category": "Pulseiras", "price": "R$199", "badge": "limitado",   "tab": "lancamento",   "icon": "oval"    } },
-        { "type": "product", "settings": { "name": "Kit Floresta Completo", "category": "Conjuntos", "price": "R$549", "badge": "lancamento", "tab": "lancamento",   "icon": "cluster" } }
+        { "type": "product", "settings": { "name": "Kit Floresta Completo", "category": "Conjuntos", "price": "R$549", "badge": "lancamento", "tab": "lancamento",   "icon": "cluster" } },
+        { "type": "product", "settings": { "name": "Anel Aurora Champagne", "category": "Anéis",     "price": "R$169", "badge": "novo",       "tab": "novidades",    "icon": "ring"    } },
+        { "type": "product", "settings": { "name": "Colar Lua Serena",      "category": "Colares",   "price": "R$239", "badge": "limitado",   "tab": "lancamento",   "icon": "pendant" } },
+        { "type": "product", "settings": { "name": "Brinco Pérola da Mata", "category": "Brincos",   "price": "R$139", "badge": "novo",       "tab": "novidades",    "icon": "drop"    } }
       ]
     }
   ]

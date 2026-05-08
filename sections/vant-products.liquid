@@ -113,9 +113,9 @@
     overflow: hidden;
     position: relative;
     cursor: pointer;
-    /* Fade-up initial state — JS adds .is-visible */
-    opacity: 0;
-    transform: translateY(24px);
+    /* Render visible by default; JS can still add .is-visible for enhancement. */
+    opacity: 1;
+    transform: translateY(0);
     transition:
       opacity  0.65s ease,
       transform 0.65s ease,
@@ -494,6 +494,10 @@
 
   var filterBtns = sectionEl.querySelectorAll('.vant-filter-btn');
   var cards      = sectionEl.querySelectorAll('.vant-product-card');
+
+  cards.forEach(function (card) {
+    card.classList.add('is-visible');
+  });
 
   /* ── FILTER ─────────────────────────────────────────── */
   function filterProducts(filter) {

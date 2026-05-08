@@ -2,12 +2,14 @@
   /* ── VANT CATEGORIES ────────────────────────────────── */
 
   .vant-categories {
-    background: linear-gradient(180deg,
-      var(--vant-deep, #0a110d) 0%,
-      var(--vant-forest, #0f1f15) 50%,
-      var(--vant-deep, #0a110d) 100%
-    );
-    padding: 100px 3rem 110px;
+    background:
+      radial-gradient(ellipse at 50% 0%, rgba(217, 167, 160, 0.06) 0%, transparent 60%),
+      linear-gradient(180deg,
+        var(--vant-deep, #101711) 0%,
+        var(--vant-forest, #162319) 50%,
+        var(--vant-deep, #101711) 100%
+      );
+    padding: 96px 5vw 108px;
   }
 
   .vant-categories__inner {
@@ -60,7 +62,7 @@
   .vant-categories__grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 22px;
+    gap: 24px;
   }
 
   /* 5th card spans 2 cols centered (cols 2–3 of 4) */
@@ -75,8 +77,8 @@
     text-decoration: none;
     position: relative;
     aspect-ratio: 3 / 4;
-    border-radius: 26px;
-    border: 0.5px solid var(--vant-border, rgba(201, 168, 76, 0.2));
+    border-radius: 32px;
+    border: 0.5px solid var(--vant-border, rgba(201, 168, 76, 0.24));
     overflow: hidden;
     cursor: pointer;
     transition: border-color 0.4s ease;
@@ -121,16 +123,16 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 52%;
+    width: 46%;
     height: auto;
-    opacity: 0.28;
+    opacity: 0.22;
     z-index: 2;
     transition: opacity 0.4s ease;
     pointer-events: none;
   }
 
   .vant-cat-card:hover .vant-cat-card__icon {
-    opacity: 0.42;
+    opacity: 0.36;
   }
 
   /* Content — bottom of card */
@@ -146,8 +148,8 @@
   .vant-cat-card__name {
     font-family: 'Cormorant Garamond', serif;
     font-weight: 500;
-    font-size: 1.35rem;
-    color: var(--vant-cream, #f0e8d5);
+    font-size: 1.5rem;
+    color: var(--vant-cream, #fbf4e6);
     margin: 0 0 0.4rem 0;
     line-height: 1.2;
   }
@@ -155,9 +157,9 @@
   .vant-cat-card__phrase {
     font-family: 'Jost', sans-serif;
     font-weight: 300;
-    font-size: 0.78rem;
+    font-size: 0.875rem;
     line-height: 1.6;
-    color: var(--vant-text-muted, #8fa88a);
+    color: var(--vant-text-muted, #c2b69c);
     margin: 0 0 0.85rem 0;
   }
 
@@ -192,12 +194,12 @@
 
   @media screen and (max-width: 989px) {
     .vant-categories {
-      padding: 72px 2rem 80px;
+      padding: 72px 3vw 80px;
     }
 
     .vant-categories__grid {
       grid-template-columns: repeat(2, 1fr);
-      gap: 16px;
+      gap: 18px;
     }
 
     .vant-cat-card--wide {
@@ -211,7 +213,7 @@
 
   @media screen and (max-width: 600px) {
     .vant-categories {
-      padding: 60px 1.2rem 68px;
+      padding: 64px 22px 72px;
     }
 
     .vant-categories__grid {
@@ -221,7 +223,7 @@
 
     .vant-cat-card {
       aspect-ratio: 4 / 3;
-      border-radius: 20px;
+      border-radius: 24px;
     }
 
     .vant-categories__title {
@@ -249,12 +251,12 @@
 
       {%- for block in section.blocks -%}
         {%- case block.settings.icon -%}
-          {%- when 'ring' -%}    {%- assign card_bg = 'linear-gradient(145deg, #0f1f15, #1a3022)' -%}
-          {%- when 'pendant' -%} {%- assign card_bg = 'linear-gradient(145deg, #101b13, #1f3526)' -%}
-          {%- when 'drop' -%}    {%- assign card_bg = 'linear-gradient(145deg, #0d1811, #263f2c)' -%}
-          {%- when 'oval' -%}    {%- assign card_bg = 'linear-gradient(145deg, #122018, #1a3022)' -%}
-          {%- when 'cluster' -%} {%- assign card_bg = 'linear-gradient(145deg, #0a110d, #2a4f35)' -%}
-          {%- else -%}           {%- assign card_bg = 'linear-gradient(145deg, #0f1f15, #1a3022)' -%}
+          {%- when 'ring' -%}    {%- assign card_bg = 'linear-gradient(145deg, #13201a, #1e3428, #241e20)' -%}
+          {%- when 'pendant' -%} {%- assign card_bg = 'linear-gradient(145deg, #141f19, #1f3526, #221d1e)' -%}
+          {%- when 'drop' -%}    {%- assign card_bg = 'linear-gradient(145deg, #111b14, #263f2c, #22191a)' -%}
+          {%- when 'oval' -%}    {%- assign card_bg = 'linear-gradient(145deg, #142018, #1e3528, #231e1f)' -%}
+          {%- when 'cluster' -%} {%- assign card_bg = 'linear-gradient(145deg, #101711, #2a4f35, #201a1b)' -%}
+          {%- else -%}           {%- assign card_bg = 'linear-gradient(145deg, #13201a, #1e3428, #241e20)' -%}
         {%- endcase -%}
 
         {%- assign is_wide = false -%}
